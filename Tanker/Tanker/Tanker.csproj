@@ -88,17 +88,17 @@
     <Compile Include="GameEntity\TimeOutableEntities\TimeOutable.cs" />
     <Compile Include="GameEntity\Wall.cs" />
     <Compile Include="GameEntity\Waters.cs" />
-    <Compile Include="MessageParser\AquirablesHandler.cs" />
-    <Compile Include="MessageParser\Finalizer.cs" />
-    <Compile Include="MessageParser\GameInidiationHandler.cs" />
-    <Compile Include="MessageParser\GlobalBroadCastHandler.cs" />
-    <Compile Include="MessageParser\JoinMessageParser.cs" />
-    <Compile Include="MessageParser\JoinSuccessHandler.cs" />
-    <Compile Include="MessageParser\MessageParser.cs" />
-    <Compile Include="MessageParser\MovingAndShootingHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Tokenizer\AquirablesHandler.cs" />
+    <Compile Include="Tokenizer\Finalizer.cs" />
+    <Compile Include="Tokenizer\GameInidiationHandler.cs" />
+    <Compile Include="Tokenizer\GlobalBroadCastHandler.cs" />
+    <Compile Include="Tokenizer\JoinMessageParser.cs" />
+    <Compile Include="Tokenizer\JoinSuccessHandler.cs" />
+    <Compile Include="Tokenizer\MessageParser.cs" />
+    <Compile Include="Tokenizer\MovingAndShootingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

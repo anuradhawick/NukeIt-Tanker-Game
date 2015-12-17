@@ -23,3 +23,19 @@ C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bi
 C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Debug\Content\lifepack.xnb
 C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Debug\Content\tank.xnb
 C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Debug\Content\scorecard.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\obj\x86\Debug\Tanker.csprojResolveAssemblyReference.cache
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\obj\x86\Debug\Tanker.exe
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\obj\x86\Debug\Tanker.pdb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\tanker.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\background1.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\water.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\brick.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\stonewall.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\Coin.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\lifepack.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\tank.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\scorecard.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Content\MyFont.xnb
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Tanker.exe
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\Tanker\bin\x86\Debug\Tanker.pdb

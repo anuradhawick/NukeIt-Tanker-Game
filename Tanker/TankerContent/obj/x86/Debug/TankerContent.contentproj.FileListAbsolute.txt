@@ -1,1 +1,2 @@
 c:\users\ravidu-pc\documents\visual studio 2015\Projects\Tanker\Tanker\TankerContent\obj\x86\Debug\TankerContent.contentprojResolveAssemblyReference.cache
+D:\Semester 4\Anuradha\Programming Challenge\XNA game\Tanker\TankerContent\obj\x86\Debug\TankerContent.contentprojResolveAssemblyReference.cache
