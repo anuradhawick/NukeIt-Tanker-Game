@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,11 @@ namespace NukeIt_Tanker.Tokenizer
         string player_name;
         int direction;
 
+        public JoinSuccessHandler(MainGrid active_grid)
+            : base(active_grid)
+        {
+
+        }
         public override bool handleMessageImpl(string message)
         {
             if (message[0] != 'S')
@@ -34,6 +40,14 @@ namespace NukeIt_Tanker.Tokenizer
                     Console.WriteLine("Join success player " + player_name);
                     Console.WriteLine("Location " + location[0] + "," + location[1]);
                     Console.WriteLine("Direction " + direction);
+                    Tank tk = new Tank();
+                    tk.Direction = direction;
+                    tk.Health = 100;
+                    tk.Location = new Microsoft.Xna.Framework.Vector2(location[0], location[1]);
+                    tk.Player_name = player_name;
+                    tk.Points=0;
+                    tk.Whether_shot=false;
+                    active_grid.addTank(tk);
                 }
                 return true;
             }

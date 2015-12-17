@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace NukeIt_Tanker.Tokenizer
 {
     class AquirablesHandler : MessageParser
     {
+        public AquirablesHandler(MainGrid active_grid)
+            : base(active_grid)
+        {
+
+        }
         // Hande the messages related to the life packs or coins
         public override bool handleMessageImpl(string message)
         {
@@ -29,6 +35,11 @@ namespace NukeIt_Tanker.Tokenizer
                     Console.WriteLine("Location " + location[0] + "," + location[1]);
                     Console.WriteLine("Timeout " + timeout);
                     Console.WriteLine("Value " + value);
+                    Coin coin = new Coin();
+                    coin.Life_time = timeout;
+                    coin.Location = new Microsoft.Xna.Framework.Vector2(location[0], location[1]);
+                    coin.Value = value;
+                    active_grid.addCoin(coin);
                     return true;
                 }
                 // if the message is related to life packs
@@ -44,6 +55,10 @@ namespace NukeIt_Tanker.Tokenizer
                     Console.WriteLine("Life Pack");
                     Console.WriteLine("Location " + location[0] + "," + location[1]);
                     Console.WriteLine("Timeout " + timeout);
+                    LifePack lp = new LifePack();
+                    lp.Life_time = timeout;
+                    lp.Location = new Microsoft.Xna.Framework.Vector2(location[0], location[1]);
+                    active_grid.addLifePack(lp);
                     return true;
                 }
             }

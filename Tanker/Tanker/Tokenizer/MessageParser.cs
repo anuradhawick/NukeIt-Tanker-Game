@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,11 @@ namespace NukeIt_Tanker.Tokenizer
     {
         public abstract bool handleMessageImpl(string message);
         private MessageParser nextHandler;
+        protected MainGrid active_grid;
         // Instantiating the message parser
-        public MessageParser()
+        public MessageParser(MainGrid active_grid)
         {
+            this.active_grid = active_grid;
             this.nextHandler = null;
         }
 

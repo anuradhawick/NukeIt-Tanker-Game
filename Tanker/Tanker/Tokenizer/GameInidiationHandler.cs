@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,8 @@ namespace NukeIt_Tanker.Tokenizer
         private string[] message_components;
         private string[] temp;
 
-        public GameInidiationHandler()
+        public GameInidiationHandler(MainGrid active_grid)
+            : base(active_grid)
         {
             bricks = new List<int[]>();
             stone = new List<int[]>();
@@ -41,6 +43,10 @@ namespace NukeIt_Tanker.Tokenizer
                     int[] cordinate = { Int32.Parse(s.Split(',')[0]), Int32.Parse(s.Split(',')[1]) };
                     bricks.Add(cordinate);
                     Console.WriteLine("Brick " + cordinate[0] + "," + cordinate[1]);
+                    BrickWall br = new BrickWall();
+                    br.Location = new Microsoft.Xna.Framework.Vector2(cordinate[0], cordinate[1]);
+                    br.Damage = 0;
+                    this.active_grid.addBrickWall(br);
                 }
                 // Decoding stone locations
                 temp = message_components[3].Split(';');
@@ -49,6 +55,9 @@ namespace NukeIt_Tanker.Tokenizer
                     int[] cordinate = { Int32.Parse(s.Split(',')[0]), Int32.Parse(s.Split(',')[1]) };
                     stone.Add(cordinate);
                     Console.WriteLine("Stone " + cordinate[0] + "," + cordinate[1]);
+                    StoneWall st = new StoneWall();
+                    st.Location = new Microsoft.Xna.Framework.Vector2(cordinate[0], cordinate[1]);
+                    active_grid.addStoneWall(st);
                 }
                 // Decoding water locations
                 temp = message_components[4].Split(';');
@@ -57,6 +66,8 @@ namespace NukeIt_Tanker.Tokenizer
                     int[] cordinate = { Int32.Parse(s.Split(',')[0]), Int32.Parse(s.Split(',')[1]) };
                     water.Add(cordinate);
                     Console.WriteLine("Water " + cordinate[0] + "," + cordinate[1]);
+                    Waters wt = new Waters();
+                    wt.Location = new Microsoft.Xna.Framework.Vector2(cordinate[0], cordinate[1]);
                 }
 
                 // Do the required mechanism here

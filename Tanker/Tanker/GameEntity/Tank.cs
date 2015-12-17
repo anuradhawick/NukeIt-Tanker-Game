@@ -9,21 +9,21 @@ namespace NukeIt_Tanker.GameEntity
     class Tank : AbstractEntity
     {
         private string player_name;
-        private string whether_shot;
-        private int coins;
+        private bool whether_shot;
         private int points;
         private int direction;
+        private int health;
+
+        public int Health
+        {
+            get { return health; }
+            set { health = value; }
+        }
 
         public string Player_name
         {
             get { return player_name; }
             set { player_name = value; }
-        }
-
-        public int Coins
-        {
-            get { return coins; }
-            set { coins = value; }
         }
 
 
@@ -40,7 +40,7 @@ namespace NukeIt_Tanker.GameEntity
             set { direction = value; }
         }
 
-        public string Whether_shot
+        public bool Whether_shot
         {
             get { return whether_shot; }
             set { whether_shot = value; }

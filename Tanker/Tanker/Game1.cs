@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using NukeIt_Tanker.GameEntity;
+using NukeIt_Tanker.CommManager;
 
 namespace Tanker
 {
@@ -29,10 +31,14 @@ namespace Tanker
         SpriteFont font;
         int screenWidth;
         int screenHeight;
-
+        MainGrid active_grid;
+        MessageHandler msghandler;
+        MessageSender msgSender;
         public Game1()
         {
+            active_grid = new MainGrid();
             graphics = new GraphicsDeviceManager(this);
+            
             Content.RootDirectory = "Content";
         }
 

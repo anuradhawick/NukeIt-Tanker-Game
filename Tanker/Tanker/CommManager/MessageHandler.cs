@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace NukeIt_Tanker.CommManager
     class MessageHandler
     {
         Communicator c;
-        public MessageHandler()
+        public MessageHandler(MainGrid active_grid)
         {
-            c = Communicator.GetInstance();
+            c = Communicator.GetInstance(active_grid);
             ThreadStart ts = new ThreadStart(c.ReceiveData);
             Thread t = new Thread(ts);
             t.Start();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,19 +13,31 @@ namespace NukeIt_Tanker.GameEntity
         // The grid contains a hash-table containing the tanks with player name as the key
         private Dictionary<string, Tank> tanks;
         // Brick walls hashed with their location
-        private Dictionary<int[], BrickWall> brickWalls;
+        private Dictionary<Vector2, BrickWall> brickWalls;
         // Stone walls hashed with their location
-        private Dictionary<int[], StoneWall> stoneWalls;
+        private Dictionary<Vector2, StoneWall> stoneWalls;
         // Waters hashed with their location
-        private Dictionary<int[], StoneWall> waters;
+        private Dictionary<Vector2, StoneWall> waters;
         // Coints hashed with their location
-        private Dictionary<int[], Coin> coins;
+        private Dictionary<Vector2, Coin> coins;
         // Life packs hashed with their location
-        private Dictionary<int[], LifePack> life_packs;
+        private Dictionary<Vector2, LifePack> life_packs;
+        private string playername;
+
+        public string Playername
+        {
+            get { return playername; }
+            set { playername = value; }
+        }
 
         public MainGrid()
         {
-
+            tanks = new Dictionary<string, Tank>();
+            brickWalls = new Dictionary<Vector2, BrickWall>();
+            stoneWalls = new Dictionary<Vector2, StoneWall>();
+            waters = new Dictionary<Vector2, StoneWall>();
+            coins = new Dictionary<Vector2, Coin>();
+            life_packs = new Dictionary<Vector2, LifePack>();
         }
 
         // Adding and accessing tanks
@@ -42,7 +55,7 @@ namespace NukeIt_Tanker.GameEntity
         {
             brickWalls.Add(b.Location, b);
         }
-        public BrickWall getBrickWall(int[] location)
+        public BrickWall getBrickWall(Vector2 location)
         {
             return brickWalls[location];
         }
@@ -52,7 +65,7 @@ namespace NukeIt_Tanker.GameEntity
         {
             stoneWalls.Add(s.Location, s);
         }
-        public StoneWall getStoneWall(int[] location)
+        public StoneWall getStoneWall(Vector2 location)
         {
             return stoneWalls[location];
         }
@@ -64,7 +77,7 @@ namespace NukeIt_Tanker.GameEntity
             Thread t = new Thread(() => timeout(c));
             t.Start();
         }
-        public Coin getCoin(int[] location)
+        public Coin getCoin(Vector2 location)
         {
             return coins[location];
         }
@@ -76,7 +89,7 @@ namespace NukeIt_Tanker.GameEntity
             t.Start();
         }
 
-        public LifePack getLifePack(int[] location)
+        public LifePack getLifePack(Vector2 location)
         {
             return life_packs[location];
         }
@@ -88,6 +101,22 @@ namespace NukeIt_Tanker.GameEntity
             coins.Remove(((AbstractEntity)te).Location);
         }
 
-        
+        // Update tank location
+        public void updateTank(String name,Vector2 location,bool shot,int dir,int points,int health){
+            tanks[name].Location = location;
+            tanks[name].Whether_shot = shot;
+            tanks[name].Direction = dir;
+            tanks[name].Points = points;
+            tanks[name].Health = health;
+        }
+
+        public void updateBrick(Vector2 location,int damage)
+        {
+            brickWalls[location].Damage = damage;
+        }
+
+
+
+
     }
 }

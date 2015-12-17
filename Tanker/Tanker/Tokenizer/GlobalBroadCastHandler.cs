@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,11 @@ namespace NukeIt_Tanker.Tokenizer
         string[] message_components;
         string[] sub_components;
 
+        public GlobalBroadCastHandler(MainGrid active_grid)
+            : base(active_grid)
+        {
+
+        }
         public override bool handleMessageImpl(string message)
         {
             // if the starting character of the message string if not G this message
@@ -46,6 +52,7 @@ namespace NukeIt_Tanker.Tokenizer
                         Console.WriteLine("Shot " + whether_shot);
                         Console.WriteLine("Location " + location[0] + "," + location[1]);
                         Console.WriteLine("Direction " + direction);
+                        active_grid.updateTank(player_name, new Microsoft.Xna.Framework.Vector2(location[0], location[1]), Int32.Parse(whether_shot) == 1 ? true : false, Int32.Parse(direction), points, health);
                     }
                     else
                     {
@@ -61,6 +68,7 @@ namespace NukeIt_Tanker.Tokenizer
                             Console.WriteLine("Brick:");
                             Console.WriteLine("Location " + x + "," + y);
                             Console.WriteLine("Damage " + damage_level);
+                            active_grid.updateBrick(new Microsoft.Xna.Framework.Vector2(x, y), damage_level);
                         }
                     }
                 }

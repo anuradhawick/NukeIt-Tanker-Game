@@ -1,4 +1,5 @@
-﻿using NukeIt_Tanker.Tokenizer;
+﻿using NukeIt_Tanker.GameEntity;
+using NukeIt_Tanker.Tokenizer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,27 +24,35 @@ namespace NukeIt_Tanker.CommManager
 
         private static Communicator comm = new Communicator();
 
-        MessageParser p1 = new GlobalBroadCastHandler();
-        MessageParser p2 = new AquirablesHandler();
-        MessageParser p3 = new MovingAndShootingHandler();
-        MessageParser p4 = new GameInidiationHandler();
-        MessageParser p5 = new JoinMessageParser();
-        MessageParser p6 = new JoinSuccessHandler();
-        MessageParser p7 = new Finalizer();
+        static MessageParser p1;
+        static MessageParser p2;
+        static MessageParser p3;
+        static MessageParser p4;
+        static MessageParser p5;
+        static MessageParser p6;
+        static MessageParser p7;
         #endregion
 
         private Communicator()
         {
+            
+        }
+
+        public static Communicator GetInstance(MainGrid active_grid)
+        {
+            p1 = new GlobalBroadCastHandler(active_grid);
+            p2 = new AquirablesHandler(active_grid);
+            p3 = new MovingAndShootingHandler(active_grid);
+            p4 = new GameInidiationHandler(active_grid);
+            p5 = new JoinMessageParser(active_grid);
+            p6 = new JoinSuccessHandler(active_grid);
+            p7 = new Finalizer(active_grid);
             p1.setNext(p2);
             p2.setNext(p3);
             p3.setNext(p4);
             p4.setNext(p5);
             p5.setNext(p6);
             p6.setNext(p7);
-        }
-
-        public static Communicator GetInstance()
-        {
             return comm;
         }
 
@@ -99,8 +108,9 @@ namespace NukeIt_Tanker.CommManager
             }
             catch (Exception e)
             {
-                Console.WriteLine("Communication (RECEIVING) Failed! \n " + e.Message);
+                Console.WriteLine("Communication (RECEIVING) Failed! \n " + e.StackTrace);
                 errorOcurred = true;
+                return;
             }
             finally
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace NukeIt_Tanker.Tokenizer
 {
     class MovingAndShootingHandler : MessageParser
     {
+        public MovingAndShootingHandler(MainGrid active_grid)
+            : base(active_grid)
+        {
+
+        }
         public override bool handleMessageImpl(string message)
         {
             switch (message)

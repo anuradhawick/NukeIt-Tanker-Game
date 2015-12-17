@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace NukeIt_Tanker.GameEntity
     abstract class AbstractEntity
     {
         // Location of the game object
-        private int[] location;
+        private Vector2 location;
 
-        public int[] Location
+        public Vector2 Location
         {
             get { return location; }
             set { location = value; }
