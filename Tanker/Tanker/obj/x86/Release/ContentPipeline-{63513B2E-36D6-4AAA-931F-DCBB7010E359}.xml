@@ -71,7 +71,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Release\Content\tank.xnb</Output>
-      <Time>2015-12-16T09:44:10.3281468+05:30</Time>
+      <Time>2015-12-17T21:54:10.2216604+05:30</Time>
     </Item>
     <Item>
       <Source>scorecard.jpg</Source>
@@ -81,6 +81,51 @@
       <Options>None</Options>
       <Output>C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Release\Content\scorecard.xnb</Output>
       <Time>2015-12-16T11:14:00.5470614+05:30</Time>
+    </Item>
+    <Item>
+      <Source>tank_blue.png</Source>
+      <Name>tank_blue</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Release\Content\tank_blue.xnb</Output>
+      <Time>2015-12-17T23:52:46.6875566+05:30</Time>
+    </Item>
+    <Item>
+      <Source>tank_green.png</Source>
+      <Name>tank_green</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Release\Content\tank_green.xnb</Output>
+      <Time>2015-12-17T23:52:54.4424571+05:30</Time>
+    </Item>
+    <Item>
+      <Source>tank_orange.png</Source>
+      <Name>tank_orange</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Release\Content\tank_orange.xnb</Output>
+      <Time>2015-12-17T23:52:59.7532067+05:30</Time>
+    </Item>
+    <Item>
+      <Source>tank_red.png</Source>
+      <Name>tank_red</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Release\Content\tank_red.xnb</Output>
+      <Time>2015-12-17T23:53:04.6371227+05:30</Time>
+    </Item>
+    <Item>
+      <Source>tank_yellow.png</Source>
+      <Name>tank_yellow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\RAVIDU-PC\Documents\Visual Studio 2015\Projects\Tanker\Tanker\Tanker\bin\x86\Release\Content\tank_yellow.xnb</Output>
+      <Time>2015-12-17T23:53:08.9274293+05:30</Time>
     </Item>
     <Item>
       <Source>MyFont.spritefont</Source>

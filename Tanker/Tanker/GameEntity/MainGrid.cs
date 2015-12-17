@@ -23,7 +23,7 @@ namespace NukeIt_Tanker.GameEntity
 
 
         // Waters hashed with their location
-        private Dictionary<Vector2, StoneWall> waters;
+        private Dictionary<Vector2, Waters> waters;
 
 
         // Coints hashed with their location
@@ -47,7 +47,7 @@ namespace NukeIt_Tanker.GameEntity
             tanks = new Dictionary<string, Tank>();
             brickWalls = new Dictionary<Vector2, BrickWall>();
             stoneWalls = new Dictionary<Vector2, StoneWall>();
-            waters = new Dictionary<Vector2, StoneWall>();
+            waters = new Dictionary<Vector2, Waters>();
             coins = new Dictionary<Vector2, Coin>();
             life_packs = new Dictionary<Vector2, LifePack>();
         }
@@ -105,12 +105,30 @@ namespace NukeIt_Tanker.GameEntity
         {
             return Life_packs[location];
         }
+        // Adding, accessing of waters
+        public void addWaters(Waters w)
+        {
+            waters.Add(w.Location, w);
+        }
 
+        public Waters getWaters(Vector2 location)
+        {
+            return Waters[location];
+        }
         // Thread operated method for removal of coins after timeout
         private void timeout(TimeOutableEntities.TimeOutable te)
         {
             Thread.Sleep(te.getTimeout());
-            Coins.Remove(((AbstractEntity)te).Location);
+            lock (te)
+            {
+                if (te is Coin)
+                {
+                    Coins.Remove(((Coin)te).Location);
+                }else if(te is LifePack)
+                {
+                    Life_packs.Remove(((LifePack)te).Location);
+                }
+            }
         }
 
         // Update tank location
@@ -146,17 +164,13 @@ namespace NukeIt_Tanker.GameEntity
             set { brickWalls = value; }
         }
 
-        internal Dictionary<Vector2, StoneWall> Waters
+        internal Dictionary<Vector2, Waters> Waters
         {
             get { return waters; }
             set { waters = value; }
         }
 
-        internal Dictionary<string, Tank> Tanks
-        {
-            get { return tanks; }
-            set { tanks = value; }
-        }
+
         internal Dictionary<Vector2, StoneWall> StoneWalls
         {
             get { return stoneWalls; }

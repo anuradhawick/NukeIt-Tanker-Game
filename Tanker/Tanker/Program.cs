@@ -15,13 +15,13 @@ namespace Tanker
         {
             using (Game1 game = new Game1())
             {
-                Console.WriteLine("Testing");
-                MainGrid active_grid = new MainGrid();
-                MessageHandler msghandler = new MessageHandler(active_grid);
-                MessageSender msgSender = new MessageSender(msghandler);
-                Console.ReadLine();
-                msgSender.join();
-                Console.WriteLine("Joined");
+                //Console.WriteLine("Testing");
+                //MainGrid active_grid = new MainGrid();
+                //MessageHandler msghandler = new MessageHandler(active_grid);
+                //MessageSender msgSender = new MessageSender(msghandler);
+                //Console.ReadLine();
+                //msgSender.join();
+                //Console.WriteLine("Joined");
                 //MessageParser p1 = new GlobalBroadCastHandler(active_grid);
                 //MessageParser p2 = new AquirablesHandler(active_grid);
                 //MessageParser p3 = new MovingAndShootingHandler(active_grid);
@@ -43,7 +43,7 @@ namespace Tanker
                 //p1.handleMessage("L:2,8:59130#");
                
 
-                //game.Run();
+                game.Run();
             }
         }
     }
