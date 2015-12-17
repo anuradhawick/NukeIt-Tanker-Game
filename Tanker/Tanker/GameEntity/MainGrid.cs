@@ -118,17 +118,35 @@ namespace NukeIt_Tanker.GameEntity
         // Thread operated method for removal of coins after timeout
         private void timeout(TimeOutableEntities.TimeOutable te)
         {
-            Thread.Sleep(te.getTimeout());
-            lock (te)
+            //Thread.Sleep(te.getTimeout());
+            long t = CurrentTimeMillis();
+            
+            if (te is Coin)
             {
-                if (te is Coin)
+                lock (coins)
                 {
-                    Coins.Remove(((Coin)te).Location);
-                }else if(te is LifePack)
+                    while (CurrentTimeMillis() < t + ((Coin)te).Life_time) ;
+                    Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);
+                    coins.Remove(((Coin)te).Location);
+                }
+
+            }
+            else if (te is LifePack)
+            {
+                lock (life_packs)
                 {
-                    Life_packs.Remove(((LifePack)te).Location);
+                    while (CurrentTimeMillis() < t + ((LifePack)te).Life_time) ;
+                    life_packs.Remove(((LifePack)te).Location);
+                    Console.WriteLine("Removing the life pack ......................" + ((LifePack)te).Life_time);
                 }
             }
+
+        }
+        private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        private static long CurrentTimeMillis()
+        {
+            return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
 
         // Update tank location
