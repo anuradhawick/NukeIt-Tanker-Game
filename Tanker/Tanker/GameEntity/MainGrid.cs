@@ -128,12 +128,6 @@ namespace NukeIt_Tanker.GameEntity
             BrickWalls[location].Damage = damage;
         }
 
-        internal Dictionary<string, Tank> Tanks
-        {
-            get { return tanks; }
-            set { tanks = value; }
-        }
-
         internal Dictionary<Vector2, Coin> Coins
         {
             get { return coins; }
