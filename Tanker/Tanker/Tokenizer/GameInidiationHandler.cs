@@ -37,7 +37,7 @@ namespace NukeIt_Tanker.Tokenizer
                 player_name = message_components[1];
                 // Decoding brick locations
                 temp = message_components[2].Split(';');
-                Console.WriteLine("Game initiation handler");
+                Console.WriteLine("Game initiation handler player name is "+player_name);
                 foreach (string s in temp)
                 {
                     int[] cordinate = { Int32.Parse(s.Split(',')[0]), Int32.Parse(s.Split(',')[1]) };
