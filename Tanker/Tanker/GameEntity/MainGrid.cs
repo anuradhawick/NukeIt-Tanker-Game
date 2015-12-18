@@ -13,6 +13,8 @@ namespace NukeIt_Tanker.GameEntity
         // The grid contains a hash-table containing the tanks with player name as the key
         private Dictionary<string, Tank> tanks;
 
+        
+
 
         // Brick walls hashed with their location
         private Dictionary<Vector2, BrickWall> brickWalls;
@@ -55,11 +57,11 @@ namespace NukeIt_Tanker.GameEntity
         // Adding and accessing tanks
         public void addTank(Tank t)
         {
-            tanks.Add(t.Player_name, t);
+            Tanks.Add(t.Player_name, t);
         }
         public Tank getTank(string player_name)
         {
-            return tanks[player_name];
+            return Tanks[player_name];
         }
 
         // Adding and accessing Brick Walls
@@ -193,6 +195,11 @@ namespace NukeIt_Tanker.GameEntity
         {
             get { return life_packs; }
             set { life_packs = value; }
+        }
+        internal Dictionary<string, Tank> Tanks
+        {
+            get { return tanks; }
+            set { tanks = value; }
         }
     }
 }
