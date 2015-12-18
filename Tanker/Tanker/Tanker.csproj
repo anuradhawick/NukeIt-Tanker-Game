@@ -75,7 +75,10 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\PathFinder.cs" />
+    <Compile Include="AI\Components.cs" />
+    <Compile Include="AI\GraphTools\Dijkstra.cs" />
+    <Compile Include="AI\GraphTools\Graph.cs" />
+    <Compile Include="AI\GraphTools\Node.cs" />
     <Compile Include="CommManager\Communicator.cs" />
     <Compile Include="CommManager\MessageHandler.cs" />
     <Compile Include="CommManager\MessageSender.cs" />
