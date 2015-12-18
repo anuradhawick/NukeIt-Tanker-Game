@@ -22,11 +22,12 @@ namespace Tanker
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D texture;
-        Texture2D water, brick, stonewall, coin, lifepack, scorecard, tank_green, tank_blue, tank_yellow, tank_red, tank_orange;
+        Texture2D water, brick, stonewall, coin, lifepack, scorecard, tank_green, tank_blue, tank_yellow, tank_red, tank_orange,gameover;
         SpriteFont font;
         Vector2 vec0, vec1, vec2, vec3, vec4;
         int screenWidth;
         int screenHeight;
+        int counter=0;
         MainGrid active_grid;
         MessageHandler msghandler;
         MessageSender msgSender;
@@ -76,6 +77,7 @@ namespace Tanker
             // Create a new SpriteBatch, which can be used to draw textures.
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            gameover = Content.Load<Texture2D>("gameover");
             tank_green = Content.Load<Texture2D>("tank_green");
             tank_blue = Content.Load<Texture2D>("tank_blue");
             tank_orange = Content.Load<Texture2D>("tank_orange");
@@ -111,7 +113,7 @@ namespace Tanker
             playerLogo.Add("P2", tank_orange);
             playerLogo.Add("P3", tank_red);
             playerLogo.Add("P4", tank_yellow);
-            msgSender.join();
+            
 
         }
 
@@ -134,7 +136,7 @@ namespace Tanker
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            ProcessKeyboard();
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -177,13 +179,16 @@ namespace Tanker
 
             }
 
+            
+
 
         }
 
         private void drawText()
         {
-            spriteBatch.DrawString(font, "PLayer ID     Points     Health", new Vector2(740, 300), Color.Black);
-           
+            spriteBatch.DrawString(font, "PRESS ENTER TO JOIN THE GAME", new Vector2(720, 250), Color.Black);
+            spriteBatch.DrawString(font, "Player ID     Points     Health", new Vector2(740, 300), Color.Black);
+
 
         }
 
@@ -197,13 +202,23 @@ namespace Tanker
             {
                 string name = item.Key;
                 Tank tk = item.Value;
-                if (tk.Health == 0) continue;
+                if (tk.Health == 0 && tk.Player_name == active_grid.Playername)
+                {
+                    Rectangle reclarge = new Rectangle(0, 0,700, 700);
+                    spriteBatch.Draw(gameover, reclarge, Color.White);
+                    continue;
+
+                }
+                else if(tk.Health == 0)
+                {
+                    continue;
+                }
                 switch (tk.Direction)
                 {
                     case 0://north
                         spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, 0, new Vector2(35, 35), 1, SpriteEffects.None, 1);
                         spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
-                       
+
                         break;
                     case 1://east
                         spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(90), new Vector2(35, 35), 1, SpriteEffects.None, 1);
@@ -218,9 +233,18 @@ namespace Tanker
                         spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
                         break;
                 }
-                spriteBatch.DrawString(font, tk.Player_name , playerstat[tk.Player_name], Color.Black);
-                spriteBatch.DrawString(font, tk.Points+"", new Vector2(playerstat[tk.Player_name].X+85, playerstat[tk.Player_name].Y), Color.Black);
-                spriteBatch.DrawString(font, tk.Health+"%", new Vector2(playerstat[tk.Player_name].X +160, playerstat[tk.Player_name].Y), Color.Black);
+                if (tk.Player_name == active_grid.Playername)
+                {
+                    spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.DarkBlue);
+                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 85, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 160, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                }
+                else {
+                    spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.Black);
+                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 85, playerstat[tk.Player_name].Y), Color.Black);
+                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 160, playerstat[tk.Player_name].Y), Color.Black);
+                }
+                
 
             }
         }
@@ -268,6 +292,7 @@ namespace Tanker
             {
                 Rectangle rc = new Rectangle((int)cc.Value.Location.X * 70, (int)cc.Value.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(coin, rc, Color.White);
+                spriteBatch.DrawString(font, cc.Value.Value + "$", new Vector2((int)cc.Value.Location.X * 70 + 10, (int)cc.Value.Location.Y * 70 + 25), Color.White);
             }
         }
 
@@ -280,6 +305,80 @@ namespace Tanker
                 Rectangle rc = new Rectangle((int)lp.Value.Location.X * 70, (int)lp.Value.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(lifepack, rc, Color.White);
             }
+        }
+
+        //takes keyboard input to join the game and move the tank
+        private void ProcessKeyboard()
+        {
+            KeyboardState keybState = Keyboard.GetState();
+            if (keybState.IsKeyDown(Keys.Left))
+            {
+                if (lastPress + 1000 < CurrentTimeMillis())
+                {
+                    msgSender.left();
+                    lastPress = CurrentTimeMillis();
+                }
+            }
+            if (keybState.IsKeyDown(Keys.Right))
+            {
+                if (lastPress + 1000 < CurrentTimeMillis())
+                {
+                    msgSender.right();
+                    lastPress = CurrentTimeMillis();
+                }
+            }
+            if (keybState.IsKeyDown(Keys.Down))
+            {
+                if (lastPress + 1000 < CurrentTimeMillis())
+                {
+                    msgSender.down();
+                    lastPress = CurrentTimeMillis();
+                }
+            }
+            if (keybState.IsKeyDown(Keys.Up))
+            {
+                if (lastPress + 1000 < CurrentTimeMillis())
+                {
+                    msgSender.up();
+                    lastPress = CurrentTimeMillis();
+                }
+            }
+            if (keybState.IsKeyDown(Keys.Space))
+            {
+                if (lastPress + 1000 < CurrentTimeMillis())
+                {
+                    msgSender.shoot();
+                    lastPress = CurrentTimeMillis();
+                }
+            }
+
+           
+            
+                
+                if (keybState.IsKeyDown(Keys.Enter))
+                {
+                    if (lastPress + 1000 < CurrentTimeMillis())
+                    {
+                    if (counter==0)
+                    {
+                        ++counter;
+                        Console.WriteLine("Enter pressed");
+                        msgSender.join();
+                        lastPress = CurrentTimeMillis();
+
+                    }
+                }
+
+            }
+
+           
+        }
+
+        private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static long lastPress = 0;
+        private static long CurrentTimeMillis()
+        {
+            return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
     }
 }
