@@ -24,6 +24,7 @@ namespace Tanker
         Texture2D texture;
         Texture2D water, brick, stonewall, coin, lifepack, scorecard, tank_green, tank_blue, tank_yellow, tank_red, tank_orange;
         SpriteFont font;
+        Vector2 vec0, vec1, vec2, vec3, vec4;
         int screenWidth;
         int screenHeight;
         MainGrid active_grid;
@@ -38,6 +39,7 @@ namespace Tanker
         Dictionary<Vector2, Coin> coins;
         Dictionary<Vector2, LifePack> life_packs;
         Dictionary<string, Texture2D> playerLogo;
+        Dictionary<string, Vector2> playerstat;
         //
         public Game1()
         {
@@ -91,6 +93,18 @@ namespace Tanker
             screenWidth = device.PresentationParameters.BackBufferWidth;
             screenHeight = device.PresentationParameters.BackBufferHeight;
             // TODO: use this.Content to load your game content here
+            vec0 = new Vector2(760, 325);
+            vec1 = new Vector2(760, 350);
+            vec2 = new Vector2(760, 375);
+            vec3 = new Vector2(760, 400);
+            vec4 = new Vector2(760, 425);
+            playerstat = new Dictionary<string, Vector2>();
+            playerstat.Add("P0", vec0);
+            playerstat.Add("P1", vec1);
+            playerstat.Add("P2", vec2);
+            playerstat.Add("P3", vec3);
+            playerstat.Add("P4", vec4);
+
             playerLogo = new Dictionary<string, Texture2D>();
             playerLogo.Add("P0", tank_green);
             playerLogo.Add("P1", tank_blue);
@@ -162,17 +176,14 @@ namespace Tanker
                 }
 
             }
-            //Rectangle coinrectangle = new Rectangle(630, 630, 70, 70);
-            //spriteBatch.Draw(coin, coinrectangle, Color.White);
-            //Rectangle rect = new Rectangle(0, 0, 70, 70);
-            //spriteBatch.Draw(coin, rect, Color.White);
 
 
         }
 
         private void drawText()
         {
-            spriteBatch.DrawString(font, "PLayer ID     Points     Coins", new Vector2(740, 300), Color.Black);
+            spriteBatch.DrawString(font, "PLayer ID     Points     Health", new Vector2(740, 300), Color.Black);
+           
 
         }
 
@@ -192,6 +203,7 @@ namespace Tanker
                     case 0://north
                         spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, 0, new Vector2(35, 35), 1, SpriteEffects.None, 1);
                         spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
+                       
                         break;
                     case 1://east
                         spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(90), new Vector2(35, 35), 1, SpriteEffects.None, 1);
@@ -206,10 +218,14 @@ namespace Tanker
                         spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
                         break;
                 }
+                spriteBatch.DrawString(font, tk.Player_name , playerstat[tk.Player_name], Color.Black);
+                spriteBatch.DrawString(font, tk.Points+"", new Vector2(playerstat[tk.Player_name].X+85, playerstat[tk.Player_name].Y), Color.Black);
+                spriteBatch.DrawString(font, tk.Health+"%", new Vector2(playerstat[tk.Player_name].X +160, playerstat[tk.Player_name].Y), Color.Black);
 
             }
         }
 
+        //Draw bricks in the GUI
         private void updateBricks()
         {
             brickWalls = active_grid.BrickWalls;
@@ -218,20 +234,22 @@ namespace Tanker
                 if (br.Value.Damage == 4) continue;
                 Rectangle rc = new Rectangle((int)br.Value.Location.X * 70, (int)br.Value.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(brick, rc, Color.White);
-                spriteBatch.DrawString(font, (100 - br.Value.Damage * 25) + "", new Vector2((int)br.Value.Location.X * 70 + 25, (int)br.Value.Location.Y * 70 + 20), Color.White);
+                spriteBatch.DrawString(font, (100 - br.Value.Damage * 25) + "", new Vector2((int)br.Value.Location.X * 70 + 20, (int)br.Value.Location.Y * 70 + 20), Color.White);
             }
         }
 
+        // Draw stones in the GUI
         private void drawStones()
         {
             stoneWalls = active_grid.StoneWalls;
             foreach (KeyValuePair<Vector2, StoneWall> st in stoneWalls)
             {
                 Rectangle rc = new Rectangle((int)st.Value.Location.X * 70, (int)st.Value.Location.Y * 70, 70, 70);
-                spriteBatch.Draw(stonewall, rc, Color.White);                
+                spriteBatch.Draw(stonewall, rc, Color.White);
             }
         }
 
+        // Draw water in the GUI
         private void drawWaters()
         {
             waters = active_grid.Waters;
@@ -239,9 +257,10 @@ namespace Tanker
             {
                 Rectangle rc = new Rectangle((int)wt.Value.Location.X * 70, (int)wt.Value.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(water, rc, Color.White);
-            }                        
+            }
         }
 
+        // Draw coins in the GUI
         private void drawCoins()
         {
             coins = active_grid.Coins;
@@ -252,6 +271,7 @@ namespace Tanker
             }
         }
 
+        // Drawing Life packs in the GUI
         private void drawLifePacks()
         {
             life_packs = active_grid.Life_packs;
