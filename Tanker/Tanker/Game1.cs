@@ -151,12 +151,12 @@ namespace Tanker
             spriteBatch.Begin();
             DrawScenery();
             drawText();
-            updateTank();
             updateBricks();
             drawStones();
             drawWaters();
             drawCoins();
             drawLifePacks();
+            updateTank();
             spriteBatch.End();
             // MathHelper.ToRadians(90)
             base.Draw(gameTime);

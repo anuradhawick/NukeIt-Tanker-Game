@@ -108,6 +108,7 @@ namespace NukeIt_Tanker.CommManager
             }
             catch (Exception e)
             {
+                System.IO.File.WriteAllText(@"C:\Writeline.txt",e.StackTrace);
                 Console.WriteLine("Communication (RECEIVING) Failed! \n " + e.StackTrace);
                 errorOcurred = true;
                 return;
