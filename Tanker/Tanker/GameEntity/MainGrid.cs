@@ -23,7 +23,7 @@ namespace NukeIt_Tanker.GameEntity
 
 
         // Waters hashed with their location
-        private Dictionary<Vector2, StoneWall> waters;
+        private Dictionary<Vector2, Waters> waters;
 
 
         // Coints hashed with their location
@@ -47,7 +47,7 @@ namespace NukeIt_Tanker.GameEntity
             tanks = new Dictionary<string, Tank>();
             brickWalls = new Dictionary<Vector2, BrickWall>();
             stoneWalls = new Dictionary<Vector2, StoneWall>();
-            waters = new Dictionary<Vector2, StoneWall>();
+            waters = new Dictionary<Vector2, Waters>();
             coins = new Dictionary<Vector2, Coin>();
             life_packs = new Dictionary<Vector2, LifePack>();
         }
@@ -105,12 +105,48 @@ namespace NukeIt_Tanker.GameEntity
         {
             return Life_packs[location];
         }
+        // Adding, accessing of waters
+        public void addWaters(Waters w)
+        {
+            waters.Add(w.Location, w);
+        }
 
+        public Waters getWaters(Vector2 location)
+        {
+            return Waters[location];
+        }
         // Thread operated method for removal of coins after timeout
         private void timeout(TimeOutableEntities.TimeOutable te)
         {
-            Thread.Sleep(te.getTimeout());
-            Coins.Remove(((AbstractEntity)te).Location);
+            //Thread.Sleep(te.getTimeout());
+            long t = CurrentTimeMillis();
+            
+            if (te is Coin)
+            {
+                lock (coins)
+                {
+                    while (CurrentTimeMillis() < t + ((Coin)te).Life_time) ;
+                    Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);
+                    coins.Remove(((Coin)te).Location);
+                }
+
+            }
+            else if (te is LifePack)
+            {
+                lock (life_packs)
+                {
+                    while (CurrentTimeMillis() < t + ((LifePack)te).Life_time) ;
+                    life_packs.Remove(((LifePack)te).Location);
+                    Console.WriteLine("Removing the life pack ......................" + ((LifePack)te).Life_time);
+                }
+            }
+
+        }
+        private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        private static long CurrentTimeMillis()
+        {
+            return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
         }
 
         // Update tank location
@@ -140,17 +176,13 @@ namespace NukeIt_Tanker.GameEntity
             set { brickWalls = value; }
         }
 
-        internal Dictionary<Vector2, StoneWall> Waters
+        internal Dictionary<Vector2, Waters> Waters
         {
             get { return waters; }
             set { waters = value; }
         }
 
-        internal Dictionary<string, Tank> Tanks
-        {
-            get { return tanks; }
-            set { tanks = value; }
-        }
+
         internal Dictionary<Vector2, StoneWall> StoneWalls
         {
             get { return stoneWalls; }

@@ -35,7 +35,7 @@ namespace NukeIt_Tanker.CommManager
 
         private Communicator()
         {
-            
+
         }
 
         public static Communicator GetInstance(MainGrid active_grid)
@@ -153,7 +153,7 @@ namespace NukeIt_Tanker.CommManager
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err");
+                Console.WriteLine("Err \n" + e.StackTrace);
             }
             finally
             {

@@ -45,8 +45,6 @@ namespace NukeIt_Tanker.Tokenizer
                 // if the message is related to life packs
                 else
                 {
-                    // These are the data related to the coins
-
                     string[] sections = message.Split(':');
                     int[] location = { Int32.Parse(sections[1].Split(',')[0]), Int32.Parse(sections[1].Split(',')[1]) };
                     int timeout = Int32.Parse(sections[2]);
