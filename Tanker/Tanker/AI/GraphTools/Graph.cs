@@ -25,7 +25,7 @@ namespace Tanker.AI
                     nodes[i, j].setY(j);
                 }
             }
-            
+
             foreach (KeyValuePair<Vector2, StoneWall> itm in mg.StoneWalls)
             {
                 nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].Type = Components.Stone;
@@ -40,7 +40,7 @@ namespace Tanker.AI
             {
                 nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].Type = Components.Water;
             }
-            
+
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -112,7 +112,7 @@ namespace Tanker.AI
             }
             return true;
         }
-        public Stack<Node> getPath(Node head)
+        public Stack<Node> getPathByNode(Node head)
         {
             Stack<Node> stack = new Stack<Node>();
             stack.Push(head);
@@ -122,6 +122,30 @@ namespace Tanker.AI
                 stack.Push(head);
             }
             return stack;
+        }
+
+        public Stack<Node> getPathByEntity(AbstractEntity ent)
+        {
+            int X = Int32.Parse(ent.Location.X + "");
+            int Y = Int32.Parse(ent.Location.Y + "");
+            return getPathByNode(nodes[X, Y]);
+
+        }
+
+        public Vector2 getNextNode(AbstractEntity ent)
+        {
+            Stack<Node> path = getPathByEntity(ent);
+            path.Pop();
+            Node n = path.Pop();
+            return new Vector2(n.getX(), n.getY());
+        }
+
+        public Vector2 getNextNode(Node head)
+        {
+            Stack<Node> path = getPathByNode(head);
+            path.Pop();
+            Node n = path.Pop();
+            return new Vector2(n.getX(), n.getY());
         }
     }
 }
