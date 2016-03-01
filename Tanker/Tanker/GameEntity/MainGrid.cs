@@ -128,8 +128,8 @@ namespace NukeIt_Tanker.GameEntity
                 lock (coins)
                 {
                     while (CurrentTimeMillis() < t + ((Coin)te).Life_time) ;
-                    Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);
-                    coins.Remove(((Coin)te).Location);
+                    Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);                    
+                    Console.WriteLine(coins.Remove(((Coin)te).Location));                    
                 }
 
             }
@@ -138,8 +138,8 @@ namespace NukeIt_Tanker.GameEntity
                 lock (life_packs)
                 {
                     while (CurrentTimeMillis() < t + ((LifePack)te).Life_time) ;
-                    life_packs.Remove(((LifePack)te).Location);
                     Console.WriteLine("Removing the life pack ......................" + ((LifePack)te).Life_time);
+                    Console.WriteLine(life_packs.Remove(((LifePack)te).Location));                    
                 }
             }
 

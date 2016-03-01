@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NukeIt_Tanker.GameEntity;
 using NukeIt_Tanker.CommManager;
+using Tanker.AI;
 
 namespace Tanker
 {
@@ -41,7 +42,8 @@ namespace Tanker
         Dictionary<Vector2, LifePack> life_packs;
         Dictionary<string, Texture2D> playerLogo;
         Dictionary<string, Vector2> playerstat;
-        //
+        // AI Object
+        GameAI gameAI;
         public Game1()
         {
             active_grid = new MainGrid();
@@ -50,7 +52,15 @@ namespace Tanker
             msgSender = new MessageSender(msghandler);
             Content.RootDirectory = "Content";
         }
+        // For testing purposes only
+        public Game1(bool test)
+        {
+            active_grid = new MainGrid();
+            graphics = new GraphicsDeviceManager(this);
+            msghandler = new MessageHandler(active_grid);
 
+            Content.RootDirectory = "Content";
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic

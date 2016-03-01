@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.CommManager
@@ -70,9 +71,16 @@ namespace NukeIt_Tanker.CommManager
                 while (true)
                 {
                     //connection is connected socket
+                    if (!listener.Pending())
+                    {
+                        Thread.Sleep(500);
+                        continue;
+                    }
                     connection = listener.AcceptSocket();
+                    
                     if (connection.Connected)
                     {
+                        
                         //To read from socket create NetworkStream object associated with socket
                         this.serverStream = new NetworkStream(connection);
 
