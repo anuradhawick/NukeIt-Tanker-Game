@@ -13,7 +13,7 @@ namespace NukeIt_Tanker.GameEntity
         // The grid contains a hash-table containing the tanks with player name as the key
         private Dictionary<string, Tank> tanks;
 
-        
+
 
 
         // Brick walls hashed with their location
@@ -122,14 +122,14 @@ namespace NukeIt_Tanker.GameEntity
         {
             //Thread.Sleep(te.getTimeout());
             long t = CurrentTimeMillis();
-            
+
             if (te is Coin)
             {
                 lock (coins)
                 {
                     while (CurrentTimeMillis() < t + ((Coin)te).Life_time) ;
-                    Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);                    
-                    Console.WriteLine(coins.Remove(((Coin)te).Location));                    
+                    Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);
+                    Console.WriteLine(coins.Remove(((Coin)te).Location));
                 }
 
             }
@@ -139,7 +139,7 @@ namespace NukeIt_Tanker.GameEntity
                 {
                     while (CurrentTimeMillis() < t + ((LifePack)te).Life_time) ;
                     Console.WriteLine("Removing the life pack ......................" + ((LifePack)te).Life_time);
-                    Console.WriteLine(life_packs.Remove(((LifePack)te).Location));                    
+                    Console.WriteLine(life_packs.Remove(((LifePack)te).Location));
                 }
             }
 
@@ -152,13 +152,14 @@ namespace NukeIt_Tanker.GameEntity
         }
 
         // Update tank location
-        public void updateTank(String name, Vector2 location, bool shot, int dir, int points, int health)
+        public void updateTank(String name, Vector2 location, bool shot, int dir, int points, int health, int coins)
         {
             tanks[name].Location = location;
             tanks[name].Whether_shot = shot;
             tanks[name].Direction = dir;
             tanks[name].Points = points;
             tanks[name].Health = health;
+            tanks[name].Coins = coins;
         }
 
         public void updateBrick(Vector2 location, int damage)

@@ -52,7 +52,7 @@ namespace NukeIt_Tanker.Tokenizer
                         Console.WriteLine("Shot " + whether_shot);
                         Console.WriteLine("Location " + location[0] + "," + location[1]);
                         Console.WriteLine("Direction " + direction);
-                        active_grid.updateTank(player_name, new Microsoft.Xna.Framework.Vector2(location[0], location[1]), Int32.Parse(whether_shot) == 1 ? true : false, Int32.Parse(direction), points, health);
+                        active_grid.updateTank(player_name, new Microsoft.Xna.Framework.Vector2(location[0], location[1]), Int32.Parse(whether_shot) == 1 ? true : false, Int32.Parse(direction), points, health,coins);
                     }
                     else
                     {
