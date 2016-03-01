@@ -100,7 +100,7 @@ namespace NukeIt_Tanker.CommManager
                         {
                             port = 7000;
                         }
-                        //Console.WriteLine("Received: " + reply.Substring(0, reply.Length - 1));
+                        Console.WriteLine("Received: " + reply.Substring(0, reply.Length - 1));
                         p1.handleMessage(reply.Substring(0, reply.Length - 1));
 
                     }
