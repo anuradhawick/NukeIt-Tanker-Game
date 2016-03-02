@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.GameEntity
 {
-    class Coin : AbstractEntity,TimeOutable
+    class Coin : AbstractEntity, TimeOutable
     {
         // Coins have a specific life time and a value
         private int life_time;
         private int value;
+        private long born_time;
 
+        public Coin()
+        {
+            born_time = CurrentTimeMillis();
+        }
         public int Value
         {
             get { return this.value; }
@@ -24,6 +29,11 @@ namespace NukeIt_Tanker.GameEntity
             set { life_time = value; }
         }
 
+        public long Born_time
+        {
+            get { return born_time; }
+            set { born_time = value; }
+        }
 
         public int getTimeout()
         {

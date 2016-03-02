@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Tanker.AI;
 using Tanker.AI.GraphTools;
+using Tanker.GameEntity;
 
 namespace Tanker
 {

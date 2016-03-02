@@ -35,7 +35,7 @@ namespace Tanker.AI
                 nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Stone;
             }
 
-            foreach (BrickWall itm in mg.BrickWalls.Values.ToList< BrickWall>())
+            foreach (BrickWall itm in mg.BrickWalls.Values.ToList<BrickWall>())
             {
                 nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Brick;
             }
@@ -119,10 +119,14 @@ namespace Tanker.AI
         {
             Stack<Node> stack = new Stack<Node>();
             stack.Push(head);
+            int count = 1;
             while (head.getParent() != null)
             {
+                count++;
                 head = head.getParent();
                 stack.Push(head);
+                if (count > 100)
+                    break;
             }
             return stack;
         }
@@ -138,7 +142,7 @@ namespace Tanker.AI
         public Vector2 getNextNode(AbstractEntity ent)
         {
             Stack<Node> path = getPathByEntity(ent);
-            if(path.Count < 2)
+            if (path.Count < 2)
             {
                 return mg.Tanks[player].Location;
             }

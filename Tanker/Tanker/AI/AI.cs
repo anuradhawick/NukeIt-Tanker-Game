@@ -26,7 +26,7 @@ namespace Tanker.AI
             Vector2 target;
             if (mg.Coins.Count > 0)
             {
-                target = g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg)]);
+                target = g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)]);
                 MotionLogic.nextMove(ms, mg, target);
                 Console.WriteLine(target.X + " ______ " + target.Y);
             }

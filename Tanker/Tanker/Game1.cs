@@ -2,16 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using NukeIt_Tanker.GameEntity;
 using NukeIt_Tanker.CommManager;
 using Tanker.AI;
 using NukeIt_Tanker.Tokenizer;
+using Tanker.GameEntity;
 
 namespace Tanker
 {
@@ -45,6 +42,8 @@ namespace Tanker
         Dictionary<string, Vector2> playerstat;
         // AI Object
         GameAI gameAI;
+        // Time Keeper
+        TimeKeeper timer;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -55,7 +54,9 @@ namespace Tanker
             // Send messages to the server and play the game
             msgSender = new MessageSender(msghandler);
             // Initiating the Game AI
-            gameAI = new GameAI(active_grid, msgSender);          
+            gameAI = new GameAI(active_grid, msgSender);
+            // Initiating timer
+            timer = new TimeKeeper(active_grid);        
             Content.RootDirectory = "Content";
         }
         // For testing purposes only
@@ -89,13 +90,14 @@ namespace Tanker
             p4.setNext(p5);
             p5.setNext(p6);
             p6.setNext(p7);
+            timer = new TimeKeeper(active_grid);
             p1.handleMessage("I:P2:5,3;1,4;3,6;0,8;2,6;4,8;6,3;5,7;1,3:2,4;6,7;7,2;8,6;2,7;1,8;7,4;8,1;0,3;7,1:4,3;6,8;9,3;0,2;1,7;2,3;5,8;9,8;5,2;7,6#");
             p1.handleMessage("S:P0;0,0;0:P1;0,9;0:P2;9,0;0#");
             p1.handleMessage("C:1,0:5000:1747#");
             //p1.handleMessage("C:3,8:10000:1747#");
             p1.handleMessage("C:8,8:15000:1747#");
             p1.handleMessage("C:6,2:15000:1747#");
-            //p1.handleMessage("L:5,5:5000#");
+            p1.handleMessage("L:5,5:5000#");
             //p1.handleMessage("L:5,6:5000#");
             gameAI = new GameAI(active_grid, msgSender);
 
