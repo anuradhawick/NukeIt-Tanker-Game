@@ -12,8 +12,12 @@ namespace Tanker.AI
     {
         Node[,] nodes;
         Node head;
+        MainGrid mg;
+        string player;
         public Graph(MainGrid mg, string player)
         {
+            this.mg = mg;
+            this.player = player;
             nodes = new Node[10, 10];
             for (int i = 0; i < 10; i++)
             {
@@ -26,19 +30,19 @@ namespace Tanker.AI
                 }
             }
 
-            foreach (KeyValuePair<Vector2, StoneWall> itm in mg.StoneWalls)
+            foreach (StoneWall itm in mg.StoneWalls.Values.ToList<StoneWall>())
             {
-                nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].Type = Components.Stone;
+                nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Stone;
             }
 
-            foreach (KeyValuePair<Vector2, BrickWall> itm in mg.BrickWalls)
+            foreach (BrickWall itm in mg.BrickWalls.Values.ToList< BrickWall>())
             {
-                nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].Type = Components.Brick;
+                nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Brick;
             }
 
-            foreach (KeyValuePair<Vector2, Waters> itm in mg.Waters)
+            foreach (Waters itm in mg.Waters.Values.ToList<Waters>())
             {
-                nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].Type = Components.Water;
+                nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Water;
             }
 
             for (int i = 0; i < 10; i++)
@@ -67,13 +71,12 @@ namespace Tanker.AI
                     }
                 }
             }
-            foreach (KeyValuePair<string, Tank> itm in mg.Tanks)
+            foreach (Tank itm in mg.Tanks.Values.ToList<Tank>())
             {
-                if (itm.Key == player)
+                if (itm.Player_name == player)
                 {
-                    Console.WriteLine("Here");
-                    nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].setDist(0);
-                    Console.WriteLine(nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].getDist());
+                    nodes[(int)itm.Location.X, (int)itm.Location.Y].setDist(0);
+                    //Console.WriteLine(nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].getDist());
                 }
             }
             this.head = nodes[(int)mg.Tanks[player].Location.X, (int)mg.Tanks[player].Location.Y];
@@ -135,6 +138,10 @@ namespace Tanker.AI
         public Vector2 getNextNode(AbstractEntity ent)
         {
             Stack<Node> path = getPathByEntity(ent);
+            if(path.Count < 2)
+            {
+                return mg.Tanks[player].Location;
+            }
             path.Pop();
             Node n = path.Pop();
             return new Vector2(n.getX(), n.getY());
@@ -143,6 +150,10 @@ namespace Tanker.AI
         public Vector2 getNextNode(Node head)
         {
             Stack<Node> path = getPathByNode(head);
+            if (path.Count < 2)
+            {
+                return mg.Tanks[player].Location;
+            }
             path.Pop();
             Node n = path.Pop();
             return new Vector2(n.getX(), n.getY());

@@ -1,9 +1,11 @@
-﻿using NukeIt_Tanker.CommManager;
+﻿using Microsoft.Xna.Framework;
+using NukeIt_Tanker.CommManager;
 using NukeIt_Tanker.GameEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tanker.AI.CalculationTools;
 
 namespace Tanker.AI
 {
@@ -18,12 +20,21 @@ namespace Tanker.AI
             this.ms = ms;
         }
 
-        private Graph calculateGraph(MainGrid mg)
+        public void move()
         {
-            Graph g = new Graph(mg, mg.Playername);
+            calculateGraph();
+            Vector2 target;
+            if (mg.Coins.Count > 0)
+            {
+                target = g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg)]);
+                MotionLogic.nextMove(ms, mg, target);
+                Console.WriteLine(target.X + " ______ " + target.Y);
+            }
+        }
+        private void calculateGraph()
+        {
+            g = new Graph(mg, mg.Playername);
             Dijkstra.run(g);
-            return g;
-
         }
     }
 }

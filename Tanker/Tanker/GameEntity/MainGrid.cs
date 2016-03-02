@@ -10,6 +10,7 @@ namespace NukeIt_Tanker.GameEntity
 {
     class MainGrid
     {
+        private bool gameStarted = false;
         // The grid contains a hash-table containing the tanks with player name as the key
         private Dictionary<string, Tank> tanks;
 
@@ -90,12 +91,9 @@ namespace NukeIt_Tanker.GameEntity
         // Adding, accessing and removal coins with timeout
         public void addCoin(Coin c)
         {
-            lock (Coins)
-            {
-                Coins.Add(c.Location, c);
-                Thread t = new Thread(() => timeout(c));
-                t.Start();
-            }
+            Coins.Add(c.Location, c);
+            Thread t = new Thread(() => timeout(c));
+            t.Start();
         }
         public Coin getCoin(Vector2 location)
         {
@@ -104,18 +102,15 @@ namespace NukeIt_Tanker.GameEntity
         // Adding, accessing and removal of life packs
         public void addLifePack(LifePack l)
         {
-            lock (life_packs)
-            {
-                Life_packs.Add(l.Location, l);
-                Thread t = new Thread(() => timeout(l));
-                t.Start();
-            }
+            Life_packs.Add(l.Location, l);
+            Thread t = new Thread(() => timeout(l));
+            t.Start();
         }
 
         public LifePack getLifePack(Vector2 location)
         {
             return Life_packs[location];
-        }         
+        }
         // Adding, accessing of waters
         public void addWaters(Waters w)
         {
@@ -134,22 +129,15 @@ namespace NukeIt_Tanker.GameEntity
 
             if (te is Coin)
             {
-                lock (coins)
-                {
-                    while (CurrentTimeMillis() < t + ((Coin)te).Life_time) ;
-                    Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);
-                    Console.WriteLine(coins.Remove(((Coin)te).Location));
-                }
-
+                while (CurrentTimeMillis() < t + ((Coin)te).Life_time) ;
+                Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);
+                Console.WriteLine(coins.Remove(((Coin)te).Location));
             }
             else if (te is LifePack)
             {
-                lock (life_packs)
-                {
-                    while (CurrentTimeMillis() < t + ((LifePack)te).Life_time) ;
-                    Console.WriteLine("Removing the life pack ......................" + ((LifePack)te).Life_time);
-                    Console.WriteLine(life_packs.Remove(((LifePack)te).Location));
-                }
+                while (CurrentTimeMillis() < t + ((LifePack)te).Life_time) ;
+                Console.WriteLine("Removing the life pack ......................" + ((LifePack)te).Life_time);
+                Console.WriteLine(life_packs.Remove(((LifePack)te).Location));
             }
 
         }
@@ -222,6 +210,19 @@ namespace NukeIt_Tanker.GameEntity
             set
             {
                 message = value;
+            }
+        }
+
+        public bool GameStarted
+        {
+            get
+            {
+                return gameStarted;
+            }
+
+            set
+            {
+                gameStarted = value;
             }
         }
     }

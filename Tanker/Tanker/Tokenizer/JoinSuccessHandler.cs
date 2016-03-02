@@ -27,7 +27,7 @@ namespace NukeIt_Tanker.Tokenizer
                 return false;
             }
             else
-            {
+            {                
                 message = message.Substring(0, message.Length - 1);
                 messageComponents = message.Split(':');
                 for (int i = 1; i < messageComponents.Length; i++)
@@ -45,10 +45,11 @@ namespace NukeIt_Tanker.Tokenizer
                     tk.Health = 100;
                     tk.Location = new Microsoft.Xna.Framework.Vector2(location[0], location[1]);
                     tk.Player_name = player_name;
-                    tk.Points=0;
-                    tk.Whether_shot=false;
+                    tk.Points = 0;
+                    tk.Whether_shot = false;
                     active_grid.addTank(tk);
                 }
+                active_grid.GameStarted = true;
                 return true;
             }
         }

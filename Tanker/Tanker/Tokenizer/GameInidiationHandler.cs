@@ -58,7 +58,11 @@ namespace NukeIt_Tanker.Tokenizer
                     Console.WriteLine("Stone " + cordinate[0] + "," + cordinate[1]);
                     StoneWall st = new StoneWall();
                     st.Location = new Microsoft.Xna.Framework.Vector2(cordinate[0], cordinate[1]);
-                    active_grid.addStoneWall(st);
+                    lock (active_grid.StoneWalls)
+                    {
+                        active_grid.addStoneWall(st);
+                    }
+                    
                 }
                 // Decoding water locations
                 temp = message_components[4].Split(';');
@@ -69,7 +73,10 @@ namespace NukeIt_Tanker.Tokenizer
                     Console.WriteLine("Water " + cordinate[0] + "," + cordinate[1]);
                     Waters wt = new Waters();
                     wt.Location = new Microsoft.Xna.Framework.Vector2(cordinate[0], cordinate[1]);
-                    active_grid.addWaters(wt);
+                    lock (active_grid.Waters)
+                    {
+                        active_grid.addWaters(wt);
+                    }                    
                 }
 
                 // Do the required mechanism here

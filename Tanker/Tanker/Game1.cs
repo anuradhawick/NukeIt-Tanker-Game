@@ -53,12 +53,14 @@ namespace Tanker
             // Receive messages from server and update the grid
             msghandler = new MessageHandler(active_grid);
             // Send messages to the server and play the game
-            msgSender = new MessageSender(msghandler);            
+            msgSender = new MessageSender(msghandler);
+            // Initiating the Game AI
+            gameAI = new GameAI(active_grid, msgSender);          
             Content.RootDirectory = "Content";
         }
         // For testing purposes only
         public Game1(bool test)
-        {            
+        {
             graphics = new GraphicsDeviceManager(this);
             // The game terrain
             active_grid = new MainGrid();
@@ -66,6 +68,7 @@ namespace Tanker
             msghandler = new MessageHandler(active_grid);
             // Send messages to the server and play the game
             msgSender = new MessageSender(msghandler);
+            Content.RootDirectory = "Content";
             MessageParser p1;
             MessageParser p2;
             MessageParser p3;
@@ -89,13 +92,14 @@ namespace Tanker
             p1.handleMessage("I:P2:5,3;1,4;3,6;0,8;2,6;4,8;6,3;5,7;1,3:2,4;6,7;7,2;8,6;2,7;1,8;7,4;8,1;0,3;7,1:4,3;6,8;9,3;0,2;1,7;2,3;5,8;9,8;5,2;7,6#");
             p1.handleMessage("S:P0;0,0;0:P1;0,9;0:P2;9,0;0#");
             p1.handleMessage("C:1,0:5000:1747#");
-            p1.handleMessage("C:3,8:10000:1747#");
-            p1.handleMessage("C:9,8:15000:1747#");
-            p1.handleMessage("L:5,5:5000#");
-            p1.handleMessage("L:5,6:5000#");
-            gameAI = new GameAI(active_grid);
-            Content.RootDirectory = "Content";
-            
+            //p1.handleMessage("C:3,8:10000:1747#");
+            p1.handleMessage("C:8,8:15000:1747#");
+            p1.handleMessage("C:6,2:15000:1747#");
+            //p1.handleMessage("L:5,5:5000#");
+            //p1.handleMessage("L:5,6:5000#");
+            gameAI = new GameAI(active_grid, msgSender);
+
+
         }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -196,15 +200,18 @@ namespace Tanker
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            DrawScenery();
-            drawText();
-            updateBricks();
-            drawStones();
-            drawWaters();
-            drawCoins();
-            drawLifePacks();
-            updateTank();
+            spriteBatch.Begin();            
+            if (lastUpdate + 1000 < CurrentTimeMillis())
+            {
+                DrawScenery();
+                drawText();
+                updateBricks();
+                drawStones();
+                drawWaters();
+                drawCoins();
+                drawLifePacks();
+                updateTank();
+            }                      
             spriteBatch.End();
             // MathHelper.ToRadians(90)
             base.Draw(gameTime);
@@ -245,9 +252,8 @@ namespace Tanker
             // update new tanks
             tanks = active_grid.Tanks;
             Stack<Tank> removable = new Stack<Tank>();
-            foreach (KeyValuePair<string, Tank> item in tanks)
+            foreach (Tank tk in tanks.Values.ToList<Tank>())
             {
-                Tank tk = item.Value;
                 if (tk.Health == 0 && tk.Player_name == active_grid.Playername)
                 {
                     Rectangle reclarge = new Rectangle(0, 0, 700, 700);
@@ -319,12 +325,12 @@ namespace Tanker
         private void updateBricks()
         {
             brickWalls = active_grid.BrickWalls;
-            foreach (KeyValuePair<Vector2, BrickWall> br in brickWalls)
+            foreach (BrickWall br in brickWalls.Values.ToList<BrickWall>())
             {
-                if (br.Value.Damage == 4) continue;
-                Rectangle rc = new Rectangle((int)br.Value.Location.X * 70, (int)br.Value.Location.Y * 70, 70, 70);
+                if (br.Damage == 4) continue;
+                Rectangle rc = new Rectangle((int)br.Location.X * 70, (int)br.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(brick, rc, Color.White);
-                spriteBatch.DrawString(font, (100 - br.Value.Damage * 25) + "", new Vector2((int)br.Value.Location.X * 70 + 20, (int)br.Value.Location.Y * 70 + 20), Color.White);
+                spriteBatch.DrawString(font, (100 - br.Damage * 25) + "", new Vector2((int)br.Location.X * 70 + 20, (int)br.Location.Y * 70 + 20), Color.White);
             }
         }
 
@@ -332,9 +338,9 @@ namespace Tanker
         private void drawStones()
         {
             stoneWalls = active_grid.StoneWalls;
-            foreach (KeyValuePair<Vector2, StoneWall> st in stoneWalls)
+            foreach (StoneWall st in stoneWalls.Values.ToList<StoneWall>())
             {
-                Rectangle rc = new Rectangle((int)st.Value.Location.X * 70, (int)st.Value.Location.Y * 70, 70, 70);
+                Rectangle rc = new Rectangle((int)st.Location.X * 70, (int)st.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(stonewall, rc, Color.White);
             }
         }
@@ -343,9 +349,9 @@ namespace Tanker
         private void drawWaters()
         {
             waters = active_grid.Waters;
-            foreach (KeyValuePair<Vector2, Waters> wt in waters)
+            foreach (Waters wt in waters.Values.ToList<Waters>())
             {
-                Rectangle rc = new Rectangle((int)wt.Value.Location.X * 70, (int)wt.Value.Location.Y * 70, 70, 70);
+                Rectangle rc = new Rectangle((int)wt.Location.X * 70, (int)wt.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(water, rc, Color.White);
             }
         }
@@ -354,11 +360,11 @@ namespace Tanker
         private void drawCoins()
         {
             coins = active_grid.Coins;
-            foreach (KeyValuePair<Vector2, Coin> cc in coins)
+            foreach (Coin cc in coins.Values.ToList<Coin>())
             {
-                Rectangle rc = new Rectangle((int)cc.Value.Location.X * 70, (int)cc.Value.Location.Y * 70, 70, 70);
+                Rectangle rc = new Rectangle((int)cc.Location.X * 70, (int)cc.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(coin, rc, Color.White);
-                spriteBatch.DrawString(font, cc.Value.Value + "$", new Vector2((int)cc.Value.Location.X * 70 + 10, (int)cc.Value.Location.Y * 70 + 25), Color.White);
+                spriteBatch.DrawString(font, cc.Value + "$", new Vector2((int)cc.Location.X * 70 + 10, (int)cc.Location.Y * 70 + 25), Color.White);
             }
         }
 
@@ -366,9 +372,9 @@ namespace Tanker
         private void drawLifePacks()
         {
             life_packs = active_grid.Life_packs;
-            foreach (KeyValuePair<Vector2, LifePack> lp in life_packs)
+            foreach (LifePack lp in life_packs.Values.ToList<LifePack>())
             {
-                Rectangle rc = new Rectangle((int)lp.Value.Location.X * 70, (int)lp.Value.Location.Y * 70, 70, 70);
+                Rectangle rc = new Rectangle((int)lp.Location.X * 70, (int)lp.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(lifepack, rc, Color.White);
             }
         }
@@ -377,6 +383,13 @@ namespace Tanker
         private void ProcessKeyboard()
         {
             KeyboardState keybState = Keyboard.GetState();
+            if (active_grid.GameStarted && lastPress + 1000 < CurrentTimeMillis())
+            {
+                //msgSender.left();
+                gameAI.move();
+                lastPress = CurrentTimeMillis();
+            }
+            /*
             if (keybState.IsKeyDown(Keys.Left))
             {
                 if (lastPress + 1000 < CurrentTimeMillis())
@@ -417,7 +430,7 @@ namespace Tanker
                     lastPress = CurrentTimeMillis();
                 }
             }
-
+            */
 
 
 
@@ -435,13 +448,14 @@ namespace Tanker
                     }
                 }
 
-            }
+            }/**/
 
 
         }
 
         private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private static long lastPress = 0;
+        private static long lastUpdate = 0;
         private static long CurrentTimeMillis()
         {
             return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
