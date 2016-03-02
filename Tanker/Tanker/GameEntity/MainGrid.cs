@@ -14,6 +14,8 @@ namespace NukeIt_Tanker.GameEntity
         private Dictionary<string, Tank> tanks;
 
 
+        //used to store messages provided by the server
+        private string message;
 
 
         // Brick walls hashed with their location
@@ -52,6 +54,7 @@ namespace NukeIt_Tanker.GameEntity
             waters = new Dictionary<Vector2, Waters>();
             coins = new Dictionary<Vector2, Coin>();
             life_packs = new Dictionary<Vector2, LifePack>();
+            message = null;
         }
 
         // Adding and accessing tanks
@@ -207,6 +210,19 @@ namespace NukeIt_Tanker.GameEntity
         {
             get { return tanks; }
             set { tanks = value; }
+        }
+
+        public string Message
+        {
+            get
+            {
+                return message;
+            }
+
+            set
+            {
+                message = value;
+            }
         }
     }
 }

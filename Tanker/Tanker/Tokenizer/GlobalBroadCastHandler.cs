@@ -26,8 +26,9 @@ namespace NukeIt_Tanker.Tokenizer
                 return false;
             }
             // if a legitimate message to be handled
-            else
+            else if (message[1] == ':')
             {
+               
                 message = message.Substring(0, message.Length - 1);
                 message_components = message.Split(':');
                 for (int i = 1; i < message_components.Length; i++)
@@ -65,14 +66,17 @@ namespace NukeIt_Tanker.Tokenizer
                             int y = Int32.Parse(s.Split(',')[1]);
                             int damage_level = Int32.Parse(s.Split(',')[2]);
                             // if the damage is 100% the brick shall be removed from the grid
-                            Console.WriteLine("Brick:");
-                            Console.WriteLine("Location " + x + "," + y);
-                            Console.WriteLine("Damage " + damage_level);
+                            //Console.WriteLine("Brick:");
+                            //Console.WriteLine("Location " + x + "," + y);
+                            //Console.WriteLine("Damage " + damage_level);
                             active_grid.updateBrick(new Microsoft.Xna.Framework.Vector2(x, y), damage_level);
                         }
                     }
                 }
                 return true;
+            }
+            else {
+                return false;
             }
         }
     }
