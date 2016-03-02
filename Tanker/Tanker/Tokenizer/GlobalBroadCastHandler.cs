@@ -28,7 +28,7 @@ namespace NukeIt_Tanker.Tokenizer
             // if a legitimate message to be handled
             else if (message[1] == ':')
             {
-                Console.WriteLine("IN global");
+               
                 message = message.Substring(0, message.Length - 1);
                 message_components = message.Split(':');
                 for (int i = 1; i < message_components.Length; i++)
