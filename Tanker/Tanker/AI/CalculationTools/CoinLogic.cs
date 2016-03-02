@@ -18,7 +18,7 @@ namespace Tanker.AI.CalculationTools
         {
             // Get the player location
             Vector2 playerLocation = mg.getTank(mg.Playername).Location;
-            // get the nearest coin pile
+            // get the nearest coin pile                          
             int dist = 1000;
             int tempDist;
             Vector2 nearestCoin = playerLocation; ;
