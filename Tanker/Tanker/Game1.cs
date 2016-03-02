@@ -47,17 +47,25 @@ namespace Tanker
         GameAI gameAI;
         public Game1()
         {
-            active_grid = new MainGrid();
             graphics = new GraphicsDeviceManager(this);
+            // The game terrain
+            active_grid = new MainGrid();
+            // Receive messages from server and update the grid
             msghandler = new MessageHandler(active_grid);
-            msgSender = new MessageSender(msghandler);
+            // Send messages to the server and play the game
+            msgSender = new MessageSender(msghandler);            
             Content.RootDirectory = "Content";
         }
         // For testing purposes only
         public Game1(bool test)
-        {
-            active_grid = new MainGrid();
+        {            
             graphics = new GraphicsDeviceManager(this);
+            // The game terrain
+            active_grid = new MainGrid();
+            // Receive messages from server and update the grid
+            msghandler = new MessageHandler(active_grid);
+            // Send messages to the server and play the game
+            msgSender = new MessageSender(msghandler);
             MessageParser p1;
             MessageParser p2;
             MessageParser p3;
@@ -85,7 +93,9 @@ namespace Tanker
             p1.handleMessage("C:9,8:15000:1747#");
             p1.handleMessage("L:5,5:5000#");
             p1.handleMessage("L:5,6:5000#");
+            gameAI = new GameAI(active_grid);
             Content.RootDirectory = "Content";
+            
         }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -248,11 +258,11 @@ namespace Tanker
                 else if (tk.Health == 0)
                 {
                     //dropping their coins
-                    Coin c = new Coin();
-                    c.Location = tk.Location;
-                    c.Value = tk.Coins;
-                    c.Life_time = 999999999;
-                    coins.Add(tk.Location, c);
+                    //Coin c = new Coin();
+                    //c.Location = tk.Location;
+                    //c.Value = tk.Coins;
+                    //c.Life_time = 999999999;
+                    //coins.Add(tk.Location, c);
                     removable.Push(tk);
                     continue;
                 }

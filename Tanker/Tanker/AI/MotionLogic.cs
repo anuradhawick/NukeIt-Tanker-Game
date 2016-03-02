@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using NukeIt_Tanker.CommManager;
 using NukeIt_Tanker.GameEntity;
 using System;
 using System.Collections.Generic;
@@ -14,28 +15,28 @@ namespace Tanker.AI
 
         }
 
-        public void nextMove(MainGrid mg,Vector2 location)
+        public static void nextMove(MessageSender ms, MainGrid mg, Vector2 location)
         {
             Vector2 player = mg.getTank(mg.Playername).Location;
             // to move right
-            if(player.X < location.X)
+            if (player.X < location.X)
             {
-                // 
+                ms.right();
             }
             // to move left
-            else if(player.X > location.X)
+            else if (player.X > location.X)
             {
-                //
+                ms.left();
             }
             // to move up
-            else if(player.Y > location.Y)
+            else if (player.Y > location.Y)
             {
-                //
+                ms.up();
             }
             // to move down
             else
             {
-                //
+                ms.down();
             }
         }
     }

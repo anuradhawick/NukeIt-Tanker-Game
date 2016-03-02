@@ -87,9 +87,12 @@ namespace NukeIt_Tanker.GameEntity
         // Adding, accessing and removal coins with timeout
         public void addCoin(Coin c)
         {
-            Coins.Add(c.Location, c);
-            Thread t = new Thread(() => timeout(c));
-            t.Start();
+            lock (Coins)
+            {
+                Coins.Add(c.Location, c);
+                Thread t = new Thread(() => timeout(c));
+                t.Start();
+            }
         }
         public Coin getCoin(Vector2 location)
         {
@@ -98,15 +101,18 @@ namespace NukeIt_Tanker.GameEntity
         // Adding, accessing and removal of life packs
         public void addLifePack(LifePack l)
         {
-            Life_packs.Add(l.Location, l);
-            Thread t = new Thread(() => timeout(l));
-            t.Start();
+            lock (life_packs)
+            {
+                Life_packs.Add(l.Location, l);
+                Thread t = new Thread(() => timeout(l));
+                t.Start();
+            }
         }
 
         public LifePack getLifePack(Vector2 location)
         {
             return Life_packs[location];
-        }
+        }         
         // Adding, accessing of waters
         public void addWaters(Waters w)
         {

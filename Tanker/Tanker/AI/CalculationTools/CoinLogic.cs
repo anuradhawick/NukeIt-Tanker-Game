@@ -16,6 +16,9 @@ namespace Tanker.AI.CalculationTools
 
         private Vector2 getBestCoin(MainGrid mg)
         {
+            // Get the player location
+            Vector2 playerLocation = mg.getTank(mg.Playername).Location;
+
             return new Vector2();
         }
     }

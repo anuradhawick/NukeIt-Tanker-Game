@@ -71,11 +71,11 @@ namespace NukeIt_Tanker.CommManager
                 while (true)
                 {
                     //connection is connected socket
-                    if (!listener.Pending())
-                    {
-                        Thread.Sleep(500);
-                        continue;
-                    }
+                    //if (!listener.Pending())
+                    //{
+                    //    Thread.Sleep(500);
+                    //    continue;
+                    //}
                     connection = listener.AcceptSocket();
                     
                     if (connection.Connected)
