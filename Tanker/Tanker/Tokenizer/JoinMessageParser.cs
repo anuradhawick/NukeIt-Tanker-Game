@@ -21,6 +21,7 @@ namespace NukeIt_Tanker.Tokenizer
                 case "PLAYERS_FULL#":
                     // Handle the case for players being full in the grid
                     Console.WriteLine("Players full");
+                    active_grid.Message = "PLAYERS_FULL#";
                     return true;
                 case "ALREADY_ADDED#":
                     // Handle the case for player already been added
@@ -29,6 +30,7 @@ namespace NukeIt_Tanker.Tokenizer
                 case "GAME_ALREADY_STARTED#":
                     // Handle the request for the game being already added
                     Console.WriteLine("Game already started");
+                    active_grid.Message = "GAME_ALREADY_STARTED#";
                     return true;
             }
             return false;

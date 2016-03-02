@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using NukeIt_Tanker.GameEntity;
 using NukeIt_Tanker.CommManager;
 using Tanker.AI;
+using NukeIt_Tanker.Tokenizer;
 
 namespace Tanker
 {
@@ -23,12 +24,12 @@ namespace Tanker
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D texture;
-        Texture2D water, brick, stonewall, coin, lifepack, scorecard, tank_green, tank_blue, tank_yellow, tank_red, tank_orange,gameover;
+        Texture2D water, brick, stonewall, coin, lifepack, scorecard, tank_green, tank_blue, tank_yellow, tank_red, tank_orange, gameover;
         SpriteFont font;
         Vector2 vec0, vec1, vec2, vec3, vec4;
         int screenWidth;
         int screenHeight;
-        int counter=0;
+        int counter = 0;
         MainGrid active_grid;
         MessageHandler msghandler;
         MessageSender msgSender;
@@ -57,8 +58,33 @@ namespace Tanker
         {
             active_grid = new MainGrid();
             graphics = new GraphicsDeviceManager(this);
-            msghandler = new MessageHandler(active_grid);
-
+            MessageParser p1;
+            MessageParser p2;
+            MessageParser p3;
+            MessageParser p4;
+            MessageParser p5;
+            MessageParser p6;
+            MessageParser p7;
+            p1 = new GlobalBroadCastHandler(active_grid);
+            p2 = new AquirablesHandler(active_grid);
+            p3 = new MovingAndShootingHandler(active_grid);
+            p4 = new GameInidiationHandler(active_grid);
+            p5 = new JoinMessageParser(active_grid);
+            p6 = new JoinSuccessHandler(active_grid);
+            p7 = new Finalizer(active_grid);
+            p1.setNext(p2);
+            p2.setNext(p3);
+            p3.setNext(p4);
+            p4.setNext(p5);
+            p5.setNext(p6);
+            p6.setNext(p7);
+            p1.handleMessage("I:P2:5,3;1,4;3,6;0,8;2,6;4,8;6,3;5,7;1,3:2,4;6,7;7,2;8,6;2,7;1,8;7,4;8,1;0,3;7,1:4,3;6,8;9,3;0,2;1,7;2,3;5,8;9,8;5,2;7,6#");
+            p1.handleMessage("S:P0;0,0;0:P1;0,9;0:P2;9,0;0#");
+            p1.handleMessage("C:1,0:5000:1747#");
+            p1.handleMessage("C:3,8:10000:1747#");
+            p1.handleMessage("C:9,8:15000:1747#");
+            p1.handleMessage("L:5,5:5000#");
+            p1.handleMessage("L:5,6:5000#");
             Content.RootDirectory = "Content";
         }
         /// <summary>
@@ -123,7 +149,7 @@ namespace Tanker
             playerLogo.Add("P2", tank_orange);
             playerLogo.Add("P3", tank_red);
             playerLogo.Add("P4", tank_yellow);
-            
+
 
         }
 
@@ -189,7 +215,7 @@ namespace Tanker
 
             }
 
-            
+
 
 
         }
@@ -208,19 +234,26 @@ namespace Tanker
 
             // update new tanks
             tanks = active_grid.Tanks;
+            Stack<Tank> removable = new Stack<Tank>();
             foreach (KeyValuePair<string, Tank> item in tanks)
             {
-                string name = item.Key;
                 Tank tk = item.Value;
                 if (tk.Health == 0 && tk.Player_name == active_grid.Playername)
                 {
-                    Rectangle reclarge = new Rectangle(0, 0,700, 700);
+                    Rectangle reclarge = new Rectangle(0, 0, 700, 700);
                     spriteBatch.Draw(gameover, reclarge, Color.White);
                     continue;
 
                 }
-                else if(tk.Health == 0)
+                else if (tk.Health == 0)
                 {
+                    //dropping their coins
+                    Coin c = new Coin();
+                    c.Location = tk.Location;
+                    c.Value = tk.Coins;
+                    c.Life_time = 999999999;
+                    coins.Add(tk.Location, c);
+                    removable.Push(tk);
                     continue;
                 }
                 switch (tk.Direction)
@@ -254,8 +287,21 @@ namespace Tanker
                     spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 85, playerstat[tk.Player_name].Y), Color.Black);
                     spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 160, playerstat[tk.Player_name].Y), Color.Black);
                 }
-                
 
+                // Remove coins if a tank collects them
+                if (coins.ContainsKey(tk.Location))
+                {
+                    coins.Remove(tk.Location);
+                }
+                // Remove lifepack if a tank collects them
+                if (life_packs.ContainsKey(tk.Location))
+                {
+                    life_packs.Remove(tk.Location);
+                }
+            }
+            while (removable.Count > 0)
+            {
+                tanks.Remove(removable.Pop().Player_name);
             }
         }
 
@@ -362,14 +408,14 @@ namespace Tanker
                 }
             }
 
-           
-            
-                
-                if (keybState.IsKeyDown(Keys.Enter))
+
+
+
+            if (keybState.IsKeyDown(Keys.Enter))
+            {
+                if (lastPress + 1000 < CurrentTimeMillis())
                 {
-                    if (lastPress + 1000 < CurrentTimeMillis())
-                    {
-                    if (counter==0)
+                    if (counter == 0)
                     {
                         ++counter;
                         Console.WriteLine("Enter pressed");
@@ -381,7 +427,7 @@ namespace Tanker
 
             }
 
-           
+
         }
 
         private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

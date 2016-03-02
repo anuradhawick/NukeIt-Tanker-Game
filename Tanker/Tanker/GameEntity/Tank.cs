@@ -13,6 +13,7 @@ namespace NukeIt_Tanker.GameEntity
         private int points;
         private int direction;
         private int health;
+        private int coins;
 
         public int Health
         {
@@ -46,6 +47,17 @@ namespace NukeIt_Tanker.GameEntity
             set { whether_shot = value; }
         }
 
+        public int Coins
+        {
+            get
+            {
+                return coins;
+            }
 
+            set
+            {
+                coins = value;
+            }
+        }
     }
 }
