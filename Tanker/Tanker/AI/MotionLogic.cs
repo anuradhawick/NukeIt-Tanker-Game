@@ -47,5 +47,51 @@ namespace Tanker.AI
                 //mg.updateTank(mg.Playername, tmp, false, 0, 0, 50, 50);
             }
         }
+
+        public bool shootable(MainGrid grid,Tank tank) {
+
+            Tank ourPlayer = grid.getTank(grid.Playername);
+            if (ourPlayer.Location.X == tank.Location.X)
+            {
+                if ((ourPlayer.Location.Y > tank.Location.Y & ourPlayer.Direction == 0) || (ourPlayer.Location.Y < tank.Location.Y & ourPlayer.Direction == 2))
+                {
+                    foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
+                    {
+                        if (ourPlayer.Location.X==stone.Location.X) {
+                            return false;
+                        }
+                    }
+                    return true;
+                    }
+                else
+                {
+                    return false;
+                }
+
+            }
+            else if (ourPlayer.Location.Y == tank.Location.Y)
+            {
+                if ((ourPlayer.Location.X > tank.Location.X & ourPlayer.Direction == 3) || (ourPlayer.Location.X < tank.Location.X & ourPlayer.Direction == 1))
+                {
+                    foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
+                    {
+                        if (ourPlayer.Location.Y == stone.Location.Y)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
