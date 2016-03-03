@@ -34,5 +34,25 @@ namespace Tanker.AI.CalculationTools
             }
             return nearestCoin;
         }
+
+        public static Vector2 getBestBrickWall(MainGrid mg, Graph g) {
+            // Get the player location
+            Vector2 playerLocation = mg.getTank(mg.Playername).Location;
+            // get the nearest Brick                          
+            int dist = 1000;
+            int tempDist;
+            Vector2 nearestBrick = playerLocation; ;
+            foreach (BrickWall item in mg.BrickWalls.Values.ToList<BrickWall>())
+            {
+                tempDist = g.getPathByEntity(item).Count;
+                //tempDist = Math.Abs((int)playerLocation.X - (int)item.Location.X) + Math.Abs((int)playerLocation.Y - (int)item.Location.Y);
+                if (tempDist < dist)
+                {
+                    dist = tempDist;
+                    nearestBrick = item.Location;
+                }
+            }
+            return nearestBrick;
+        }
     }
 }
