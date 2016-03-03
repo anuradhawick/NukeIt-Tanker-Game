@@ -44,6 +44,11 @@ namespace Tanker.AI
             {
                 nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Water;
             }
+            foreach (Tank itm in mg.Tanks.Values.ToList<Tank>())
+            {
+                if (itm.Player_name == mg.Playername) continue;
+                nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Tank;
+            }
 
             for (int i = 0; i < 10; i++)
             {
@@ -133,8 +138,8 @@ namespace Tanker.AI
 
         public Stack<Node> getPathByEntity(AbstractEntity ent)
         {
-            int X = Int32.Parse(ent.Location.X + "");
-            int Y = Int32.Parse(ent.Location.Y + "");
+            int X = (int)ent.Location.X;
+            int Y = (int)ent.Location.Y;
             return getPathByNode(nodes[X, Y]);
 
         }

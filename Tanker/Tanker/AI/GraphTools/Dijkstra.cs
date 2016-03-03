@@ -28,7 +28,7 @@ namespace Tanker.AI
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if (nodes[i, j].Type == Components.Empty)
+                    if (nodes[i, j].Type == Components.Empty || nodes[i, j].Type==Components.Tank)
                     {
                         vertextSet.Add(nodes[i, j]);
                     }

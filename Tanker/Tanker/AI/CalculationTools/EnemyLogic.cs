@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using NukeIt_Tanker.GameEntity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Tanker.AI.GraphTools;
 
 namespace Tanker.AI.CalculationTools
@@ -37,14 +35,15 @@ namespace Tanker.AI.CalculationTools
         public static bool shouldEscape(MainGrid grid, Graph g)
         {
             Tank ourPlayer = grid.getTank(grid.Playername);
-            foreach (Tank tank in grid.Tanks.Values.ToList<Tank>()) {
+            foreach (Tank tank in grid.Tanks.Values.ToList<Tank>())
+            {
                 if (ourPlayer.Location.X == tank.Location.X)
                 {
                     if ((ourPlayer.Location.Y > tank.Location.Y & tank.Direction == 2) || (ourPlayer.Location.Y < tank.Location.Y & tank.Direction == 0))
                     {
                         foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
                         {
-                            if ((ourPlayer.Location.X <stone.Location.X && stone.Location.X <tank.Location.X) || (tank.Location.X<stone.Location.X && stone.Location.X<ourPlayer.Location.X) )
+                            if ((ourPlayer.Location.X < stone.Location.X && stone.Location.X < tank.Location.X) || (tank.Location.X < stone.Location.X && stone.Location.X < ourPlayer.Location.X))
                             {
                                 return false;
                             }
@@ -103,7 +102,7 @@ namespace Tanker.AI.CalculationTools
             return new Vector2(nearestNode.getX(), nearestNode.getY());
         }
 
-        private static List<Node> getSafePlaces(MainGrid mg,Graph g)
+        private static List<Node> getSafePlaces(MainGrid mg, Graph g)
         {
             List<Node> safePlaces = new List<Node>();
             Vector2 myLocation = mg.Tanks[mg.Playername].Location;
@@ -127,14 +126,14 @@ namespace Tanker.AI.CalculationTools
                                     case 0:
                                         // North
                                         // Same X cordinate and our Y is lower
-                                        if(ourPlayer.Location.X == tk.Location.X && ourPlayer.Location.Y < tk.Location.Y)
+                                        if (ourPlayer.Location.X == tk.Location.X && ourPlayer.Location.Y < tk.Location.Y)
                                         {
                                             // At Risk
                                         }
                                         else
                                         {
                                             // Safe
-                                            safePlaces.Add(nodes[i,j]);
+                                            safePlaces.Add(nodes[i, j]);
                                         }
                                         break;
                                     case 1:

@@ -95,5 +95,67 @@ namespace Tanker.AI
                 return false;
             }
         }
+
+        public static bool isCellOccupied(Graph g, Vector2 nextCell)
+        {
+            if (g.getNodes()[(int)nextCell.X, (int)nextCell.Y].Type == Components.Tank)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool isDirectShootable(MainGrid mg, Graph g)
+        {
+            Tank ourPlayer = mg.Tanks[mg.Playername];
+            switch (ourPlayer.Direction)
+            {
+                case 0:
+                    // North
+                    foreach (Tank tk in mg.Tanks.Values.ToList<Tank>())
+                    {
+                        if (tk.Player_name == mg.Playername) continue;
+                        if (tk.Location.X == ourPlayer.Location.X && tk.Location.Y < ourPlayer.Location.Y)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                case 1:
+                    // East
+                    foreach (Tank tk in mg.Tanks.Values.ToList<Tank>())
+                    {
+                        if (tk.Player_name == mg.Playername) continue;
+                        if (tk.Location.X > ourPlayer.Location.X && tk.Location.Y == ourPlayer.Location.Y)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                case 2:
+                    // South
+                    foreach (Tank tk in mg.Tanks.Values.ToList<Tank>())
+                    {
+                        if (tk.Player_name == mg.Playername) continue;
+                        if (tk.Location.X == ourPlayer.Location.X && tk.Location.Y > ourPlayer.Location.Y)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                case 3:
+                    // West
+                    foreach (Tank tk in mg.Tanks.Values.ToList<Tank>())
+                    {
+                        if (tk.Player_name == mg.Playername) continue;
+                        if (tk.Location.X < ourPlayer.Location.X && tk.Location.Y == ourPlayer.Location.Y)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+            }
+            return false;
+        }
     }
 }

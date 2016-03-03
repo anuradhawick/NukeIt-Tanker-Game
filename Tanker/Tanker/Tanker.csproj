@@ -80,6 +80,7 @@
     <Compile Include="AI\CalculationTools\CoinLogic.cs" />
     <Compile Include="AI\CalculationTools\EnemyLogic.cs" />
     <Compile Include="AI\CalculationTools\HealthLogic.cs" />
+    <Compile Include="AI\CalculationTools\Nodes.cs" />
     <Compile Include="AI\Components.cs" />
     <Compile Include="AI\GraphTools\Dijkstra.cs" />
     <Compile Include="AI\GraphTools\Graph.cs" />

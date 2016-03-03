@@ -84,14 +84,9 @@ namespace Tanker.AI.CalculationTools
                 if (tk.Player_name == player) continue;
                 if (maxCoins < tk.Coins) maxCoins = tk.Coins;
             }
-            if (maxCoins < coins)
-            {
-                IsScoreLow = true;
-            }
-            else
-            {
-                IsScoreLow = false;
-            }
+            isScoreLow = (maxCoins > coins);
         }
+
+
     }
 }
