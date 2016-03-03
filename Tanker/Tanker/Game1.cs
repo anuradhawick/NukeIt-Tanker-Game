@@ -56,7 +56,7 @@ namespace Tanker
             // Initiating the Game AI
             gameAI = new GameAI(active_grid, msgSender);
             // Initiating timer
-            timer = new TimeKeeper(active_grid);        
+            timer = new TimeKeeper(active_grid);
             Content.RootDirectory = "Content";
         }
         // For testing purposes only
@@ -202,7 +202,7 @@ namespace Tanker
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
-            spriteBatch.Begin();            
+            spriteBatch.Begin();
             if (lastUpdate + 1000 < CurrentTimeMillis())
             {
                 DrawScenery();
@@ -213,7 +213,7 @@ namespace Tanker
                 drawCoins();
                 drawLifePacks();
                 updateTank();
-            }                      
+            }
             spriteBatch.End();
             // MathHelper.ToRadians(90)
             base.Draw(gameTime);
@@ -385,7 +385,7 @@ namespace Tanker
         private void ProcessKeyboard()
         {
             KeyboardState keybState = Keyboard.GetState();
-            if (active_grid.GameStarted && lastPress + 1000 < CurrentTimeMillis())
+            if (active_grid.GameStarted && lastPress + 1200 < CurrentTimeMillis())
             {
                 //msgSender.left();
                 gameAI.move();

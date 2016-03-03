@@ -23,13 +23,22 @@ namespace Tanker.AI
         public void move()
         {
             calculateGraph();
-            Vector2 target;
-            if (mg.Coins.Count > 0)
+            BaseLogic.updateStats(mg);
+            if (BaseLogic.IsScoreLow && mg.Coins.Count > 0)
             {
-                target = g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg,g)]);
-                MotionLogic.nextMove(ms, mg, target);
-                Console.WriteLine(target.X + " ______ " + target.Y);
+                MotionLogic.nextMove(ms, mg, g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)]));
             }
+            else if (mg.Tanks.Count > 1 && MotionLogic.shootable(mg, EnemyLogic.getNearestEnemy(mg, g)))
+            {
+                Console.WriteLine("____________ " + EnemyLogic.getNearestEnemy(mg, g).Player_name + "___IS AIMED_TO_SHOOT");
+                ms.shoot();
+            }
+            else
+            {
+                Console.WriteLine("____________ " + EnemyLogic.getNearestEnemy(mg, g).Player_name + "___IS AIMED_TO_MOVE");
+                MotionLogic.nextMove(ms, mg, g.getNextNode(EnemyLogic.getNearestEnemy(mg, g)));
+            }
+            
         }
         private void calculateGraph()
         {

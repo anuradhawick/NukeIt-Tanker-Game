@@ -10,25 +10,38 @@ namespace Tanker.AI.CalculationTools
     class EnemyLogic
     {
 
-        public static Vector2 getSuitableEnemy(MainGrid mg, Graph g)
+        public static Tank getNearestEnemy(MainGrid mg, Graph g)
         {
             // Get the player location
             Vector2 playerLocation = mg.getTank(mg.Playername).Location;
             // get the nearest coin pile                          
             int dist = 1000;
             int tempDist;
-            Vector2 nearestEnemy = playerLocation; ;
+            Tank nearestEnemy = mg.Tanks[mg.Playername];
             foreach (Tank tank in mg.Tanks.Values.ToList<Tank>())
             {
                 tempDist = g.getPathByEntity(tank).Count;
-                //tempDist = Math.Abs((int)playerLocation.X - (int)item.Location.X) + Math.Abs((int)playerLocation.Y - (int)item.Location.Y);
+                if (tank.Player_name == mg.Playername)
+                    continue;
                 if (tempDist < dist)
                 {
                     dist = tempDist;
-                    nearestEnemy=tank.Location;
+                    nearestEnemy = tank;
                 }
             }
             return nearestEnemy;
+        }
+
+        // Check if the current position is vulnerable for an attack
+        public static bool shouldEscape(MainGrid mg, Graph g)
+        {
+            return false;
+        }
+
+        // Get the location of the place with no vulnerability
+        public static Vector2 getNearestSafePlace(MainGrid mg, Graph g)
+        {
+            return new Vector2();
         }
     }
 }

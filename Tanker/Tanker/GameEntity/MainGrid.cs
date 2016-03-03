@@ -92,8 +92,6 @@ namespace NukeIt_Tanker.GameEntity
         public void addCoin(Coin c)
         {
             Coins.Add(c.Location, c);
-            //Thread t = new Thread(() => timeout(c));
-            //t.Start();
         }
         public Coin getCoin(Vector2 location)
         {
@@ -103,8 +101,6 @@ namespace NukeIt_Tanker.GameEntity
         public void addLifePack(LifePack l)
         {
             Life_packs.Add(l.Location, l);
-            //Thread t = new Thread(() => timeout(l));
-            //t.Start();
         }
 
         public LifePack getLifePack(Vector2 location)
@@ -121,33 +117,7 @@ namespace NukeIt_Tanker.GameEntity
         {
             return Waters[location];
         }
-        // Thread operated method for removal of coins after timeout
-        //private void timeout(TimeOutableEntities.TimeOutable te)
-        //{
-        //    //Thread.Sleep(te.getTimeout());
-        //    long t = CurrentTimeMillis();
-
-        //    if (te is Coin)
-        //    {
-        //        while (CurrentTimeMillis() < t + ((Coin)te).Life_time) ;
-        //        Console.WriteLine("Removing the coin ......................" + ((Coin)te).Life_time);
-        //        Console.WriteLine(coins.Remove(((Coin)te).Location));
-        //    }
-        //    else if (te is LifePack)
-        //    {
-        //        while (CurrentTimeMillis() < t + ((LifePack)te).Life_time) ;
-        //        Console.WriteLine("Removing the life pack ......................" + ((LifePack)te).Life_time);
-        //        Console.WriteLine(life_packs.Remove(((LifePack)te).Location));
-        //    }
-
-        //}
-        //private static readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        //private static long CurrentTimeMillis()
-        //{
-        //    return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
-        //}
-
+        
         // Update tank location
         public void updateTank(String name, Vector2 location, bool shot, int dir, int points, int health, int coins)
         {

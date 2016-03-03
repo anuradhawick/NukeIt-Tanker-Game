@@ -21,8 +21,9 @@ namespace NukeIt_Tanker.CommManager
 
         public void send(string msg)
         {
-            Thread thread = new Thread(() => c.SendData(msg));
-            thread.Start();
+            //Thread thread = new Thread(() => c.SendData(msg));
+            //thread.Start();
+            c.SendData(msg);
         }
         private void perform_return()
         {

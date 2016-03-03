@@ -9,6 +9,7 @@ namespace NukeIt_Tanker.CommManager
     class MessageSender
     {
         MessageHandler mh;
+        bool canSend = true;
         public MessageSender(MessageHandler i)
         {
             mh = i;
