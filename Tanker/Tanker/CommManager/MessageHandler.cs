@@ -15,7 +15,7 @@ namespace NukeIt_Tanker.CommManager
         {
             c = Communicator.GetInstance(active_grid);
             ThreadStart ts = new ThreadStart(c.ReceiveData);
-            Thread t = new Thread(ts);
+            Thread t = new Thread(ts,50000000);
             t.Start();
         }
 
