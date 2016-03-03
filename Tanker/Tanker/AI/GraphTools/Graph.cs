@@ -55,22 +55,22 @@ namespace Tanker.AI
                 for (int j = 0; j < 10; j++)
                 {
                     // up
-                    if (isValidCell(i - 1, j) && nodes[i - 1, j].Type == Components.Empty)
+                    if (isValidCell(i - 1, j) && (nodes[i - 1, j].Type == Components.Empty || nodes[i - 1, j].Type == Components.Tank))
                     {
                         nodes[i, j].addNeighbour(nodes[i - 1, j]);
                     }
                     // down
-                    if (isValidCell(i + 1, j) && nodes[i + 1, j].Type == Components.Empty)
+                    if (isValidCell(i + 1, j) && (nodes[i + 1, j].Type == Components.Empty || nodes[i + 1, j].Type == Components.Tank))
                     {
                         nodes[i, j].addNeighbour(nodes[i + 1, j]);
                     }
                     // right
-                    if (isValidCell(i, j + 1) && nodes[i, j + 1].Type == Components.Empty)
+                    if (isValidCell(i, j + 1) && (nodes[i, j + 1].Type == Components.Empty|| nodes[i, j + 1].Type == Components.Tank))
                     {
                         nodes[i, j].addNeighbour(nodes[i, j + 1]);
                     }
                     // left
-                    if (isValidCell(i, j - 1) && nodes[i, j - 1].Type == Components.Empty)
+                    if (isValidCell(i, j - 1) && (nodes[i, j - 1].Type == Components.Empty|| nodes[i, j - 1].Type == Components.Tank))
                     {
                         nodes[i, j].addNeighbour(nodes[i, j - 1]);
                     }

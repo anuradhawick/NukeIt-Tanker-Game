@@ -23,16 +23,11 @@ namespace Tanker.AI
 
         public void move()
         {
-            calculateGraph();
-            shoot();
-            //if (!chaseCoin())
-            //{
-            //    for (int i = 0; i < 100; i++)
-            //    {
-            //        Console.WriteLine("Soot itttttt=====");
-            //    }
-            //    shoot();
-            //}
+            calculateGraph();            
+            if (!chaseCoin())
+            {                
+                shoot();
+            }
             if (BaseLogic.IsHealthLow)
             {
                 // Chase for health
@@ -60,7 +55,7 @@ namespace Tanker.AI
         {
             if (mg.Tanks.Count > 1)
             {
-                if (MotionLogic.isDirectShootable(mg, g))
+                if (EnemyLogic.isDirectShootable(mg))
                 {
                     ms.shoot();
                     return true;
@@ -80,7 +75,7 @@ namespace Tanker.AI
             {
                 if (MotionLogic.isCellOccupied(g, g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)])))
                 {
-                    if (MotionLogic.isDirectShootable(mg, g))
+                    if (EnemyLogic.isDirectShootable(mg))
                     {
                         ms.shoot();
                         return true;
