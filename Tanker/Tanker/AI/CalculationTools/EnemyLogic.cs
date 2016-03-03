@@ -89,8 +89,18 @@ namespace Tanker.AI.CalculationTools
         // Get the location of the place with no vulnerability
         public static Vector2 getNearestSafePlace(MainGrid mg, Graph g)
         {
-
-            return new Vector2();
+            List<Node> safePlaces = getSafePlaces(mg, g);
+            Node nearestNode = null;
+            int tempDist = 10000;
+            foreach (Node n in safePlaces)
+            {
+                if (tempDist > g.getPathByNode(n).Count)
+                {
+                    tempDist = g.getPathByNode(n).Count;
+                    nearestNode = n;
+                }
+            }
+            return new Vector2(nearestNode.getX(), nearestNode.getY());
         }
 
         private static List<Node> getSafePlaces(MainGrid mg,Graph g)
