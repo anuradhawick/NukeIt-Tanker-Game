@@ -58,7 +58,7 @@ namespace Tanker.AI
                 {
                     foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
                     {
-                        if (ourPlayer.Location.X == stone.Location.X)
+                        if ((ourPlayer.Location.X < stone.Location.X && stone.Location.X < tank.Location.X) || (tank.Location.X < stone.Location.X && stone.Location.X < ourPlayer.Location.X))
                         {
                             return false;
                         }
@@ -77,7 +77,7 @@ namespace Tanker.AI
                 {
                     foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
                     {
-                        if (ourPlayer.Location.Y == stone.Location.Y)
+                        if ((ourPlayer.Location.Y < stone.Location.Y && stone.Location.Y < tank.Location.Y) || (tank.Location.Y < stone.Location.Y && stone.Location.Y < ourPlayer.Location.Y))
                         {
                             return false;
                         }

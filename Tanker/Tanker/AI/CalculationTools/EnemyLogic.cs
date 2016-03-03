@@ -34,9 +34,56 @@ namespace Tanker.AI.CalculationTools
         }
 
         // Check if the current position is vulnerable for an attack
-        public static bool shouldEscape(MainGrid mg, Graph g)
+        public static bool shouldEscape(MainGrid grid, Graph g)
         {
+            Tank ourPlayer = grid.getTank(grid.Playername);
+            foreach (Tank tank in grid.Tanks.Values.ToList<Tank>()) {
+                if (ourPlayer.Location.X == tank.Location.X)
+                {
+                    if ((ourPlayer.Location.Y > tank.Location.Y & tank.Direction == 2) || (ourPlayer.Location.Y < tank.Location.Y & tank.Direction == 0))
+                    {
+                        foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
+                        {
+                            if ((ourPlayer.Location.X <stone.Location.X && stone.Location.X <tank.Location.X) || (tank.Location.X<stone.Location.X && stone.Location.X<ourPlayer.Location.X) )
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                else if (ourPlayer.Location.Y == tank.Location.Y)
+                {
+                    if ((ourPlayer.Location.X > tank.Location.X & tank.Direction == 1) || (ourPlayer.Location.X < tank.Location.X & tank.Direction == 3))
+                    {
+                        foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
+                        {
+                            if ((ourPlayer.Location.Y < stone.Location.Y && stone.Location.Y < tank.Location.Y) || (tank.Location.Y < stone.Location.Y && stone.Location.Y < ourPlayer.Location.Y))
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
             return false;
+
         }
 
         // Get the location of the place with no vulnerability
