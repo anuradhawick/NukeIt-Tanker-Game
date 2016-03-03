@@ -15,14 +15,15 @@ namespace NukeIt_Tanker.CommManager
         {
             c = Communicator.GetInstance(active_grid);
             ThreadStart ts = new ThreadStart(c.ReceiveData);
-            Thread t = new Thread(ts);
+            Thread t = new Thread(ts,50000000);
             t.Start();
         }
 
         public void send(string msg)
         {
-            Thread thread = new Thread(() => c.SendData(msg));
-            thread.Start();
+            //Thread thread = new Thread(() => c.SendData(msg));
+            //thread.Start();
+            c.SendData(msg);
         }
         private void perform_return()
         {

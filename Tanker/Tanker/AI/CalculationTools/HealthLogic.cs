@@ -12,7 +12,7 @@ namespace Tanker.AI.CalculationTools
 
         private HealthLogic() { }
 
-        public static Vector2 getBestCoin(MainGrid mg, Graph g)
+        public static Vector2 getBestLifePack(MainGrid mg, Graph g)
         {
             // Get the player location
             Vector2 playerLocation = mg.getTank(mg.Playername).Location;

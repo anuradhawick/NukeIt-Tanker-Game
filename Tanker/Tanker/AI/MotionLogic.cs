@@ -48,7 +48,8 @@ namespace Tanker.AI
             }
         }
 
-        public bool shootable(MainGrid grid,Tank tank) {
+        public static bool shootable(MainGrid grid, Tank tank)
+        {
 
             Tank ourPlayer = grid.getTank(grid.Playername);
             if (ourPlayer.Location.X == tank.Location.X)
@@ -57,12 +58,13 @@ namespace Tanker.AI
                 {
                     foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
                     {
-                        if (ourPlayer.Location.X==stone.Location.X) {
+                        if (ourPlayer.Location.X == stone.Location.X)
+                        {
                             return false;
                         }
                     }
                     return true;
-                    }
+                }
                 else
                 {
                     return false;
