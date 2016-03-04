@@ -25,10 +25,10 @@ namespace Tanker.AI
         {
             calculateGraph();
             //shoot();
-            if (!chaseCoin())
-            {
+            //if (!chaseCoin())
+            //{
                 shoot();
-            }
+          //  }
             if (BaseLogic.IsHealthLow)
             {
                 // Chase for health
