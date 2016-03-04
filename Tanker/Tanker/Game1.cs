@@ -21,7 +21,7 @@ namespace Tanker
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D texture;
-        Texture2D water, brick, stonewall, coin, lifepack, scorecard, tank_green, tank_blue, tank_yellow, tank_red, tank_orange, gameover;
+        Texture2D water, brick, stonewall, coin, lifepack, scorecard, tank_green, tank_blue, tank_yellow, tank_red, tank_orange, gameover,bullet;
         SpriteFont font;
         Vector2 vec0, vec1, vec2, vec3, vec4;
         int screenWidth;
@@ -143,6 +143,7 @@ namespace Tanker
             stonewall = Content.Load<Texture2D>("stonewall");
             coin = Content.Load<Texture2D>("Coin");
             lifepack = Content.Load<Texture2D>("lifepack");
+            bullet = Content.Load<Texture2D>("rocket");
             device = graphics.GraphicsDevice;
             screenWidth = device.PresentationParameters.BackBufferWidth;
             screenHeight = device.PresentationParameters.BackBufferHeight;
@@ -206,13 +207,13 @@ namespace Tanker
             if (lastUpdate + 1000 < CurrentTimeMillis())
             {
                 DrawScenery();
-                drawText();
-                updateBricks();
-                drawStones();
-                drawWaters();
-                drawCoins();
-                drawLifePacks();
-                updateTank();
+                //drawText();
+                //updateBricks();
+                //drawStones();
+                //drawWaters();
+                //drawCoins();
+                //drawLifePacks();
+                //updateTank();
             }
             spriteBatch.End();
             // MathHelper.ToRadians(90)
@@ -234,8 +235,9 @@ namespace Tanker
 
             }
 
-
-
+         //   Rectangle rc = new Rectangle(70, 70, 70, 70);
+            spriteBatch.Draw(bullet, new Vector2(70-35,70-35), null, Color.White, MathHelper.ToRadians(90), new Vector2(35, 35), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(bullet, new Vector2(70 - 35, 70 - 35), null, Color.White, MathHelper.ToRadians(270), new Vector2(35, 35), 1, SpriteEffects.None, 1);
 
         }
 
