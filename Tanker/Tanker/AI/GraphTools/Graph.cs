@@ -81,7 +81,6 @@ namespace Tanker.AI
                 if (itm.Player_name == player)
                 {
                     nodes[(int)itm.Location.X, (int)itm.Location.Y].setDist(0);
-                    //Console.WriteLine(nodes[(int)itm.Value.Location.X, (int)itm.Value.Location.Y].getDist());
                 }
             }
             this.head = nodes[(int)mg.Tanks[player].Location.X, (int)mg.Tanks[player].Location.Y];

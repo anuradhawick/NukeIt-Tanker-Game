@@ -23,9 +23,10 @@ namespace Tanker.AI
 
         public void move()
         {
-            calculateGraph();            
+            calculateGraph();
+            //shoot();
             if (!chaseCoin())
-            {                
+            {
                 shoot();
             }
             if (BaseLogic.IsHealthLow)
@@ -63,6 +64,7 @@ namespace Tanker.AI
                 else
                 {
                     MotionLogic.nextMove(ms, mg, g.getNextNode(EnemyLogic.getNearestEnemy(mg, g)));
+                    Console.WriteLine("AIMED TO KILL "+EnemyLogic.getNearestEnemy(mg, g).Player_name+"=========");
                     return true;
                 }
             }

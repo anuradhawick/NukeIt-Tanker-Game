@@ -91,6 +91,7 @@
     <Compile Include="CommManager\MessageSender.cs" />
     <Compile Include="GameEntity\AbstractEntity.cs" />
     <Compile Include="GameEntity\BrickWall.cs" />
+    <Compile Include="GameEntity\Bullet.cs" />
     <Compile Include="GameEntity\MainGrid.cs" />
     <Compile Include="GameEntity\StoneWall.cs" />
     <Compile Include="GameEntity\Tank.cs" />

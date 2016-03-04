@@ -32,6 +32,8 @@ namespace NukeIt_Tanker.CommManager
         static MessageParser p5;
         static MessageParser p6;
         static MessageParser p7;
+
+        private string ipAddress = "192.168.1.1";
         #endregion
 
         private Communicator()
@@ -64,7 +66,7 @@ namespace NukeIt_Tanker.CommManager
             try
             {
                 //Creating listening Socket
-                this.listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7000);
+                this.listener = new TcpListener(IPAddress.Any, 7000);
                 //Starts listening
                 this.listener.Start();
                 //Establish connection upon client request
@@ -141,7 +143,7 @@ namespace NukeIt_Tanker.CommManager
                 if (true)
                 {
 
-                    this.client.Connect("127.0.0.1", 6000);
+                    this.client.Connect(ipAddress, 6000);
 
                     if (this.client.Connected)
                     {
