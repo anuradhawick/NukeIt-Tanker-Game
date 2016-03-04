@@ -297,9 +297,9 @@ namespace Tanker
                 if (tk.Player_name == active_grid.Playername)
                 {
                     spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.DarkBlue);
-                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.Black);
-                    spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.Black);
-                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.Black);
+                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                    spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.DarkBlue);
                 }
                 else {
                     spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.Black);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Tanker.GameEntity;
 
 namespace NukeIt_Tanker.GameEntity
 {
@@ -38,6 +39,9 @@ namespace NukeIt_Tanker.GameEntity
         // Life packs hashed with their location
         private Dictionary<Vector2, LifePack> life_packs;
 
+        // List of bullets on air
+        private List<Bullet> bullets;
+
 
         private string playername;
 
@@ -55,7 +59,26 @@ namespace NukeIt_Tanker.GameEntity
             waters = new Dictionary<Vector2, Waters>();
             coins = new Dictionary<Vector2, Coin>();
             life_packs = new Dictionary<Vector2, LifePack>();
+            bullets = new List<Bullet>();
             message = null;
+        }
+
+        // Adding bullets
+        public void addBullet(Bullet b)
+        {
+            bullets.Add(b);
+        }
+
+        // Retrieve bullets
+        public List<Bullet> getBullets()
+        {
+            return bullets;
+        }
+
+        // Remove bullet
+        public void removeBullet(Bullet b)
+        {
+            bullets.Remove(b);
         }
 
         // Adding and accessing tanks
@@ -117,7 +140,7 @@ namespace NukeIt_Tanker.GameEntity
         {
             return Waters[location];
         }
-        
+
         // Update tank location
         public void updateTank(String name, Vector2 location, bool shot, int dir, int points, int health, int coins)
         {
