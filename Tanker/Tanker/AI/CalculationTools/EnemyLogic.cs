@@ -218,6 +218,7 @@ namespace Tanker.AI.CalculationTools
                     {
                         if ((ourPlayer.Location.Y < stone.Location.Y && stone.Location.Y < tank.Location.Y) || (tank.Location.Y < stone.Location.Y && stone.Location.Y < ourPlayer.Location.Y))
                         {
+                        
                             return false;
                         }
                     }
@@ -241,6 +242,7 @@ namespace Tanker.AI.CalculationTools
             {
                 if (shootable(mg, tk))
                 {
+                   
                     return true;
                 }
             }

@@ -242,7 +242,7 @@ namespace Tanker
         private void drawText()
         {
             spriteBatch.DrawString(font, "PRESS ENTER TO JOIN THE GAME", new Vector2(720, 250), Color.Black);
-            spriteBatch.DrawString(font, "Player ID     Points     Health", new Vector2(740, 300), Color.Black);
+            spriteBatch.DrawString(font, "Player ID     Points    Coins     Health", new Vector2(720, 300), Color.Black);
 
 
         }
@@ -297,13 +297,17 @@ namespace Tanker
                 if (tk.Player_name == active_grid.Playername)
                 {
                     spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.DarkBlue);
-                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 85, playerstat[tk.Player_name].Y), Color.DarkBlue);
-                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 160, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.Black);
+                    spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.Black);
+                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.Black);
                 }
                 else {
                     spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.Black);
-                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 85, playerstat[tk.Player_name].Y), Color.Black);
-                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 160, playerstat[tk.Player_name].Y), Color.Black);
+                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.Black);
+                    spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.Black);
+                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.Black);
+                    // spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 85, playerstat[tk.Player_name].Y), Color.Black);
+                    //   spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 160, playerstat[tk.Player_name].Y), Color.Black);
                 }
 
                 // Remove coins if a tank collects them
