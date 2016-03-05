@@ -37,9 +37,9 @@ namespace NukeIt_Tanker.Tokenizer
                     location = new int[] { Int32.Parse((sub_components[1].Split(','))[0]), Int32.Parse((sub_components[1].Split(','))[1]) };
                     direction = Int32.Parse(sub_components[2]);
                     //Handle the case and return true
-                    Console.WriteLine("Join success player " + player_name);
-                    Console.WriteLine("Location " + location[0] + "," + location[1]);
-                    Console.WriteLine("Direction " + direction);
+                    //Console.WriteLine("Join success player " + player_name);
+                    //Console.WriteLine("Location " + location[0] + "," + location[1]);
+                    //Console.WriteLine("Direction " + direction);
                     Tank tk = new Tank();
                     tk.Direction = direction;
                     tk.Health = 100;

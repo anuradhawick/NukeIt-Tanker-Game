@@ -20,7 +20,7 @@ namespace Tanker
             using (Game1 game = new Game1())
             {
                 //Console.WriteLine("Testing");
-                MainGrid active_grid = new MainGrid();
+                //MainGrid active_grid = new MainGrid();
                 //MessageHandler msghandler = new MessageHandler(active_grid);
                 //MessageSender msgSender = new MessageSender(msghandler);
                 //Console.ReadLine();
@@ -40,7 +40,7 @@ namespace Tanker
                 //p5.setNext(p6);
                 //p6.setNext(p7);
 
-                //p1.handleMessage("I:P2:5,3;1,4;3,6;0,8;2,6;4,8;6,3;5,7;1,3:2,4;6,7;7,2;8,6;2,7;1,8;7,4;8,1;0,3;7,1:4,3;6,8;9,3;0,2;1,7;2,3;5,8;9,8;5,2;7,6#");
+                //p1.handleMessage("I:P0:5,3;1,4;3,6;0,8;2,6;4,8;6,3;5,7;1,3:2,4;6,7;7,2;8,6;2,7;1,8;7,4;8,1;0,3;7,1:4,3;6,8;9,3;0,2;1,7;2,3;5,8;9,8;5,2;7,6#");
                 //p1.handleMessage("S:P0;0,0;0:P1;0,9;0:P2;9,0;0#");
                 //p1.handleMessage("C:3,8:16423:1747#");
                 //p1.handleMessage("G:P0;0,0;0;0;100;0;0:P1;0,9;0;0;100;0;0:P2;9,0;0;0;100;0;0:5,3,0;1,4,0;3,6,0;0,8,0;2,6,0;4,8,0;6,3,0;5,7,0;1,3,0#");
@@ -65,7 +65,7 @@ namespace Tanker
                 //{
                 //    for (int j = 0; j < 10; j++)
                 //    {
-                //        Console.Write(string.Format("{0,5}", ns[i, j].getDist()) + " ");
+                //        Console.Write(string.Format("{0,5}", ns[i, j].getDist()) + " " + ns[i, j].Type + " ");
                 //    }
                 //    Console.WriteLine();
                 //}
@@ -83,7 +83,7 @@ namespace Tanker
                 //    }
                 //    Console.WriteLine();
                 //}
-                //Stack<Node> path = g.getPathByNode(g.getNodes()[3, 8]);
+                //Stack<Node> path = g.getPathByNode(g.getNodes()[9, 9]);
                 ////Stack<Node> path = g.getPath(active_grid.getCoin(new Microsoft.Xna.Framework.Vector2(3,8)));
                 //while (path.Count > 0)
                 //{

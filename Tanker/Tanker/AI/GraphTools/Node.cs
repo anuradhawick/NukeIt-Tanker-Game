@@ -7,17 +7,16 @@ namespace Tanker.AI.GraphTools
 {
     class Node
     {
-        Node parent;
-        Components type;
-        List<Node> neighbours;
-        int x, y;
-        int dist;
+        private Node parent;
+        private Components type;
+        private List<Node> neighbours;
+        private int x, y;
+        private int dist = 99999;
 
         public void addNeighbour(Node n)
         {
             neighbours.Add(n);
             parent = null;
-            dist = 99999;
         }
 
         public List<Node> getNeighbours()
@@ -57,21 +56,21 @@ namespace Tanker.AI.GraphTools
 
         public void setParent(Node n)
         {
-            this.parent = n;
+            parent = n;
         }
         public Node getParent()
         {
-            return this.parent;
+            return parent;
         }
 
         public void setDist(int i)
         {
-            this.dist = i;
+            dist = i;
         }
 
         public int getDist()
         {
-            return this.dist;
+            return dist;
         }
     }
 }

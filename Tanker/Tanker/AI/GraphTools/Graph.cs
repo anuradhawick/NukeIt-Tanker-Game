@@ -54,26 +54,54 @@ namespace Tanker.AI
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    // up
-                    if (isValidCell(i - 1, j) && (nodes[i - 1, j].Type == Components.Empty || nodes[i - 1, j].Type == Components.Tank))
+                    // if waters, or stone walls or brick wall it does not have neighbours but has parents
+                    if (nodes[i, j].Type == Components.Water || nodes[i, j].Type == Components.Stone || nodes[i, j].Type == Components.Brick)
                     {
-                        nodes[i, j].addNeighbour(nodes[i - 1, j]);
+                        continue;
                     }
-                    // down
-                    if (isValidCell(i + 1, j) && (nodes[i + 1, j].Type == Components.Empty || nodes[i + 1, j].Type == Components.Tank))
+                    else
                     {
-                        nodes[i, j].addNeighbour(nodes[i + 1, j]);
+                        // up
+                        if (MotionLogic.isValidCell(i - 1, j))
+                        {
+                            nodes[i, j].addNeighbour(nodes[i - 1, j]);
+                        }
+                        // down
+                        if (MotionLogic.isValidCell(i + 1, j))
+                        {
+                            nodes[i, j].addNeighbour(nodes[i + 1, j]);
+                        }
+                        // right
+                        if (MotionLogic.isValidCell(i, j + 1))
+                        {
+                            nodes[i, j].addNeighbour(nodes[i, j + 1]);
+                        }
+                        // left
+                        if (MotionLogic.isValidCell(i, j - 1))
+                        {
+                            nodes[i, j].addNeighbour(nodes[i, j - 1]);
+                        }
                     }
-                    // right
-                    if (isValidCell(i, j + 1) && (nodes[i, j + 1].Type == Components.Empty|| nodes[i, j + 1].Type == Components.Tank))
-                    {
-                        nodes[i, j].addNeighbour(nodes[i, j + 1]);
-                    }
-                    // left
-                    if (isValidCell(i, j - 1) && (nodes[i, j - 1].Type == Components.Empty|| nodes[i, j - 1].Type == Components.Tank))
-                    {
-                        nodes[i, j].addNeighbour(nodes[i, j - 1]);
-                    }
+                    //// up
+                    //if (MotionLogic.isValidCell(i - 1, j) && (nodes[i - 1, j].Type == Components.Empty || nodes[i - 1, j].Type == Components.Tank))
+                    //{
+                    //    nodes[i, j].addNeighbour(nodes[i - 1, j]);
+                    //}
+                    //// down
+                    //if (MotionLogic.isValidCell(i + 1, j) && (nodes[i + 1, j].Type == Components.Empty || nodes[i + 1, j].Type == Components.Tank))
+                    //{
+                    //    nodes[i, j].addNeighbour(nodes[i + 1, j]);
+                    //}
+                    //// right
+                    //if (MotionLogic.isValidCell(i, j + 1) && (nodes[i, j + 1].Type == Components.Empty|| nodes[i, j + 1].Type == Components.Tank))
+                    //{
+                    //    nodes[i, j].addNeighbour(nodes[i, j + 1]);
+                    //}
+                    //// left
+                    //if (MotionLogic.isValidCell(i, j - 1) && (nodes[i, j - 1].Type == Components.Empty|| nodes[i, j - 1].Type == Components.Tank))
+                    //{
+                    //    nodes[i, j].addNeighbour(nodes[i, j - 1]);
+                    //}
                 }
             }
             foreach (Tank itm in mg.Tanks.Values.ToList<Tank>())
@@ -83,54 +111,28 @@ namespace Tanker.AI
                     nodes[(int)itm.Location.X, (int)itm.Location.Y].setDist(0);
                 }
             }
-            this.head = nodes[(int)mg.Tanks[player].Location.X, (int)mg.Tanks[player].Location.Y];
+            head = nodes[(int)mg.Tanks[player].Location.X, (int)mg.Tanks[player].Location.Y];
         }
         public Node[,] getNodes()
         {
-            return this.nodes;
+            return nodes;
         }
 
         public Node getHead()
         {
 
-            return this.head;
+            return head;
 
         }
 
-
-        // Check if a cell is in the grid
-        private Boolean isValidCell(int x, int y)
-        {
-            if (x < 0)
-            {
-                return false;
-            }
-            if (y < 0)
-            {
-                return false;
-            }
-            if (x > 9)
-            {
-                return false;
-            }
-            if (y > 9)
-            {
-                return false;
-            }
-            return true;
-        }
         public Stack<Node> getPathByNode(Node head)
         {
             Stack<Node> stack = new Stack<Node>();
             stack.Push(head);
-            int count = 1;
             while (head.getParent() != null)
             {
-                count++;
                 head = head.getParent();
                 stack.Push(head);
-                if (count > 100)
-                    break;
             }
             return stack;
         }

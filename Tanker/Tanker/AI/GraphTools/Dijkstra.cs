@@ -28,10 +28,14 @@ namespace Tanker.AI
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if (nodes[i, j].Type == Components.Empty || nodes[i, j].Type==Components.Tank)
-                    {
+                    //if (nodes[i, j].Type != Components.Stone && nodes[i, j].Type != Components.Water && nodes[i, j].Type != Components.Brick)
+                    //{
                         vertextSet.Add(nodes[i, j]);
-                    }
+                    //}
+                    //if (nodes[i, j].Type == Components.Empty || nodes[i, j].Type==Components.Tank)
+                    //{
+                    //    vertextSet.Add(nodes[i, j]);
+                    //}
                 }
             }
             head.setDist(0);
@@ -48,9 +52,11 @@ namespace Tanker.AI
                         u = n;
                     }
                 }
+                // Remove the discovered vertex
                 vertextSet.Remove(u);
                 foreach (Node v in u.getNeighbours())
                 {
+                    // Update minimum distances to each neighbour
                     if (u.getDist() + 1 < v.getDist())
                     {
                         v.setDist(u.getDist() + 1);

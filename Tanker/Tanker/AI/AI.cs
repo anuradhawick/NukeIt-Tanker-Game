@@ -24,27 +24,84 @@ namespace Tanker.AI
         public void move()
         {
             calculateGraph();
-            //shoot();
-            //if (!chaseCoin())
-            //{
-                shoot();
-          //  }
             if (BaseLogic.IsHealthLow)
             {
-                // Chase for health
+                if (findHealth())
+                {
+                    // this is ok
+                }
+                else
+                {
+                    // Escape if at risk
+                    if (!escape())
+                    {
+                        // Cannot excape, then shoot
+                        shoot();
+                    }
+                    else
+                    {
+                        // This is ok
+                    }
+                }
             }
-            else if (BaseLogic.IsScoreLow)
+            else if (mg.Tanks.Count < 2)
             {
-                
-                // Chase for coins
-                
+                if (!chaseCoin())
+                {
+                    // Initiate brick logic
+                    breakBrick();
+                }
+            }
+            else if (mg.Tanks.Count > 1)
+            {
+                //if (ShootingLogic.isDirectShootable(mg))
+                //{
+                //    shoot();
+                //}
+                //else
+                if (!chaseCoin())
+                {
+                    if (!breakBrick())
+                    {
+                        // No bricks either
+                        shoot();
+                    }
+                    else
+                    {
+                        // This is ok
+                    }
+                }
+                else
+                {
+                    // This is ok
+                }
+            }
+
+
+        }
+
+        private bool breakBrick()
+        {
+            if (mg.BrickWalls.ContainsKey(CoinLogic.getBestBrickWall(mg, g)))
+            {
+                if (ShootingLogic.shootable(mg, mg.BrickWalls[CoinLogic.getBestBrickWall(mg, g)]))
+                {
+                    ms.shoot();
+                    return true;
+                }
+                else
+                {
+                    MotionLogic.nextMove(ms, mg, g.getNextNode(mg.BrickWalls[CoinLogic.getBestBrickWall(mg, g)]));
+                    return true;
+                }
             }
             else
             {
-                //shoot();
+                return false;
             }
 
         }
+
         private void calculateGraph()
         {
             g = new Graph(mg, mg.Playername);
@@ -52,19 +109,52 @@ namespace Tanker.AI
             BaseLogic.updateStats(mg);
         }
 
-        private bool shoot()
+        private bool findHealth()
         {
-            if (mg.Tanks.Count > 1)
+            if (mg.Life_packs.Count > 0)
             {
-                if (EnemyLogic.isDirectShootable(mg))
+                if (MotionLogic.isCellOccupied(g, g.getNextNode(mg.Life_packs[HealthLogic.getBestLifePack(mg, g)])))
                 {
-                    ms.shoot();
+                    if (ShootingLogic.isDirectShootable(mg))
+                    {
+                        ms.shoot();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else if (mg.Tanks[mg.Playername].Location != g.getNextNode(mg.Life_packs[HealthLogic.getBestLifePack(mg, g)]))
+                {
+                    MotionLogic.nextMove(ms, mg, g.getNextNode(mg.Life_packs[HealthLogic.getBestLifePack(mg, g)]));
                     return true;
                 }
                 else
                 {
-                    MotionLogic.nextMove(ms, mg, g.getNextNode(EnemyLogic.getNearestEnemy(mg, g)));
-                    Console.WriteLine("AIMED TO KILL "+EnemyLogic.getNearestEnemy(mg, g).Player_name+"=========");
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool shoot()
+        {
+            if (mg.Tanks.Count > 1)
+            {
+                if (ShootingLogic.isDirectShootable(mg))
+                {
+                    ms.shoot();
+                    //Console.WriteLine("Contains this many tanks"+mg.Tanks.Count);
+                    return true;
+                }
+                else
+                {
+                    MotionLogic.nextMove(ms, mg, g.getNextNode(ShootingLogic.getNearestEnemy(mg, g)));
+                    //Console.WriteLine("AIMED TO KILL " + EnemyLogic.getNearestEnemy(mg, g).Player_name + "========= TO" + g.getNextNode(EnemyLogic.getNearestEnemy(mg, g)).X + "," + g.getNextNode(EnemyLogic.getNearestEnemy(mg, g)).Y + "FROM " + mg.Tanks[mg.Playername].Location.X + "," + mg.Tanks[mg.Playername].Location.X);
                     return true;
                 }
             }
@@ -77,10 +167,14 @@ namespace Tanker.AI
             {
                 if (MotionLogic.isCellOccupied(g, g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)])))
                 {
-                    if (EnemyLogic.isDirectShootable(mg))
+                    if (ShootingLogic.isDirectShootable(mg))
                     {
                         ms.shoot();
                         return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
                 else if (mg.Tanks[mg.Playername].Location != g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)]))
@@ -92,11 +186,20 @@ namespace Tanker.AI
                 {
                     return false;
                 }
-                    
+
             }
             return false;
         }
 
+        private bool escape()
+        {
+            if (ShootingLogic.shouldEscape(mg, g))
+            {
+                MotionLogic.nextMove(ms, mg, g.getNextNode(g.getNodes()[(int)ShootingLogic.getNearestSafePlace(mg, g).X, (int)ShootingLogic.getNearestSafePlace(mg, g).Y]));
+                return true;
+            }
+            return false;
+        }
 
     }
 }

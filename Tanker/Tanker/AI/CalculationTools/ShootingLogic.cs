@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using NukeIt_Tanker.GameEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tanker.AI.GraphTools;
 
 namespace Tanker.AI.CalculationTools
 {
-    class EnemyLogic
+    class ShootingLogic
     {
 
         public static Tank getNearestEnemy(MainGrid mg, Graph g)
@@ -16,7 +17,7 @@ namespace Tanker.AI.CalculationTools
             // get the nearest coin pile                          
             int dist = 1000;
             int tempDist;
-            Tank nearestEnemy = mg.Tanks[mg.Playername];
+            Tank nearestEnemy = new Tank();
             foreach (Tank tank in mg.Tanks.Values.ToList<Tank>())
             {
                 tempDist = g.getPathByEntity(tank).Count;
@@ -184,19 +185,20 @@ namespace Tanker.AI.CalculationTools
             return safePlaces;
         }
 
-        public static bool shootable(MainGrid grid, Tank tank)
+        public static bool shootable(MainGrid grid, AbstractEntity ent)
         {
 
             Tank ourPlayer = grid.getTank(grid.Playername);
 
-            if (ourPlayer.Location.X == tank.Location.X)
+            if (ourPlayer.Location.X == ent.Location.X)
             {
                 // Our player facing north or south
-                if ((ourPlayer.Location.Y > tank.Location.Y & ourPlayer.Direction == 0) || (ourPlayer.Location.Y < tank.Location.Y & ourPlayer.Direction == 2))
+                if ((ourPlayer.Location.Y > ent.Location.Y & ourPlayer.Direction == 0) || (ourPlayer.Location.Y < ent.Location.Y & ourPlayer.Direction == 2))
                 {
                     foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
                     {
-                        if ((ourPlayer.Location.X < stone.Location.X && stone.Location.X < tank.Location.X) || (tank.Location.X < stone.Location.X && stone.Location.X < ourPlayer.Location.X))
+                        // intercepting stones
+                        if (MotionLogic.isInBetween(ent, ourPlayer, stone))
                         {
                             return false;
                         }
@@ -209,16 +211,16 @@ namespace Tanker.AI.CalculationTools
                 }
 
             }
-            else if (ourPlayer.Location.Y == tank.Location.Y)
+            else if (ourPlayer.Location.Y == ent.Location.Y)
             {
                 // our player facing east or west
-                if ((ourPlayer.Location.X > tank.Location.X & ourPlayer.Direction == 3) || (ourPlayer.Location.X < tank.Location.X & ourPlayer.Direction == 1))
+                if ((ourPlayer.Location.X > ent.Location.X & ourPlayer.Direction == 3) || (ourPlayer.Location.X < ent.Location.X & ourPlayer.Direction == 1))
                 {
                     foreach (StoneWall stone in grid.StoneWalls.Values.ToList<StoneWall>())
                     {
-                        if ((ourPlayer.Location.Y < stone.Location.Y && stone.Location.Y < tank.Location.Y) || (tank.Location.Y < stone.Location.Y && stone.Location.Y < ourPlayer.Location.Y))
+                        // intercepting stones
+                        if (MotionLogic.isInBetween(ent, ourPlayer, stone))
                         {
-                        
                             return false;
                         }
                     }
@@ -240,7 +242,8 @@ namespace Tanker.AI.CalculationTools
         {
             foreach (Tank tk in mg.Tanks.Values.ToList<Tank>())
             {
-                if (shootable(mg, tk))
+                if (tk.Player_name == mg.Playername) continue;
+                else if (shootable(mg, tk))
                 {
                    
                     return true;

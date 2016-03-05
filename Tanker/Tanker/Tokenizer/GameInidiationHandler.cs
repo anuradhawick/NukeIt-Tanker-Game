@@ -37,7 +37,7 @@ namespace NukeIt_Tanker.Tokenizer
                 player_name = message_components[1];
                 // Decoding brick locations
                 temp = message_components[2].Split(';');
-                Console.WriteLine("Game initiation handler player name is "+player_name);
+                Console.WriteLine("Game initiation handler player name is " + player_name);
                 foreach (string s in temp)
                 {
                     int[] cordinate = { Int32.Parse(s.Split(',')[0]), Int32.Parse(s.Split(',')[1]) };
@@ -65,7 +65,7 @@ namespace NukeIt_Tanker.Tokenizer
                     {
                         active_grid.addStoneWall(st);
                     }
-                    
+
                 }
                 // Decoding water locations
                 temp = message_components[4].Split(';');
@@ -79,10 +79,8 @@ namespace NukeIt_Tanker.Tokenizer
                     lock (active_grid.Waters)
                     {
                         active_grid.addWaters(wt);
-                    }                    
+                    }
                 }
-
-                // Do the required mechanism here
                 return true;
             }
         }

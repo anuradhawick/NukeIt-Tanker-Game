@@ -212,7 +212,7 @@ namespace Tanker
             drawCoins();
             drawLifePacks();
             updateTank();
-            drawBullet();
+            //drawBullet();
             spriteBatch.End();
             // MathHelper.ToRadians(90)
             base.Draw(gameTime);
@@ -323,7 +323,7 @@ namespace Tanker
                 // If the tank has shot
                 if (tk.Whether_shot)
                 {
-                    active_grid.addBullet(new Bullet(tk.Direction, new Vector2(tk.Location.X, tk.Location.Y)));
+                    active_grid.addBullet(new Bullet(tk.Direction, new Vector2(tk.Location.X * 70, tk.Location.Y * 70)));
                 }
             }
             while (removable.Count > 0)
@@ -338,7 +338,11 @@ namespace Tanker
             brickWalls = active_grid.BrickWalls;
             foreach (BrickWall br in brickWalls.Values.ToList<BrickWall>())
             {
-                if (br.Damage == 4) continue;
+                if (br.Damage == 4)
+                {
+                    brickWalls.Remove(br.Location);
+                    continue;
+                }
                 Rectangle rc = new Rectangle((int)br.Location.X * 70, (int)br.Location.Y * 70, 70, 70);
                 spriteBatch.Draw(brick, rc, Color.White);
                 spriteBatch.DrawString(font, (100 - br.Damage * 25) + "", new Vector2((int)br.Location.X * 70 + 20, (int)br.Location.Y * 70 + 20), Color.White);
@@ -393,6 +397,7 @@ namespace Tanker
         // Drawing bullets
         public void drawBullet()
         {
+            //spriteBatch.Draw(bullet, new Vector2(210 + 35, 0 + 35), null, Color.White, MathHelper.ToRadians(90), new Vector2(35, 35), 1, SpriteEffects.None, 1);
             // updates that happen in 1/60 th of a second are performed
             foreach (Bullet b in active_grid.getBullets().ToArray<Bullet>())
             {
@@ -400,28 +405,27 @@ namespace Tanker
                 {
                     case 0:
                         // North
-                        
-                        b.Location = new Vector2(b.Location.X, b.Location.Y - 3.5f);
-                        Console.WriteLine("SHOOTING DIrection North X=" + (b.Location.X ) + " Y=" +( b.Location.Y-3.5f));
+                        b.PixelLocation = new Vector2(b.PixelLocation.X, b.PixelLocation.Y - 3.5f);
+                        // Console.WriteLine("SHOOTING DIrection North X=" + (b.PixelLocation.X) + " Y=" + (b.PixelLocation.Y - 3.5f));
                         break;
                     case 1:
                         // East
-                        b.Location = new Vector2(b.Location.X + 3.5f, b.Location.Y);
-                        Console.WriteLine("SHOOTING DIrection EAST X=" + (b.Location.X + 3.5f) + " Y=" + b.Location.Y);
+                        b.PixelLocation = new Vector2(b.PixelLocation.X + 3.5f, b.PixelLocation.Y);
+                        //Console.WriteLine("SHOOTING DIrection EAST X=" + (b.PixelLocation.X + 3.5f) + " Y=" + b.PixelLocation.Y);
                         break;
                     case 2:
                         // South
-                        b.Location = new Vector2(b.Location.X, b.Location.Y + 3.5f);
-                        Console.WriteLine("SHOOTING DIrection SOUTH X=" + (b.Location.X) + " Y=" +( b.Location.Y+35));
+                        b.PixelLocation = new Vector2(b.PixelLocation.X, b.PixelLocation.Y + 3.5f);
+                        //Console.WriteLine("SHOOTING DIrection SOUTH X=" + (b.PixelLocation.X) + " Y=" + (b.PixelLocation.Y + 35));
                         break;
                     case 3:
                         // West
-                        b.Location = new Vector2(b.Location.X - 3.5f, b.Location.Y);
-                        Console.WriteLine("SHOOTING DIrection WEST X="+ (b.Location.X - 3.5f)+" Y="+ b.Location.Y);
+                        b.PixelLocation = new Vector2(b.PixelLocation.X - 3.5f, b.PixelLocation.Y);
+                        //Console.WriteLine("SHOOTING DIrection WEST X=" + (b.PixelLocation.X - 3.5f) + " Y=" + b.PixelLocation.Y);
                         break;
                 }
                 // If there is a tank, stone, brick or index out remove the bullet
-                if (b.PixelLocation.X > 70 * 10 || b.PixelLocation.Y > 70 * 10 || b.PixelLocation.X < 0 || b.PixelLocation.Y < 0)
+                if (b.PixelLocation.X > 70 * 9 || b.PixelLocation.Y > 70 * 9 || b.PixelLocation.X < 0 || b.PixelLocation.Y < 0)
                 {
                     Console.WriteLine("Remove bullet..............");
                     active_grid.removeBullet(b);
@@ -435,7 +439,6 @@ namespace Tanker
                         {
                             // Intercept with a tank
                             active_grid.removeBullet(b);
-                            Console.WriteLine("pixellocation.X/70="+ b.PixelLocation.X / 70+" And Y" + b.PixelLocation.Y / 70);
                             continue;
                         }
                     }
@@ -451,10 +454,10 @@ namespace Tanker
                     }
                 }
             }
-          
-            foreach (Bullet b in active_grid.getBullets().ToArray<Bullet>())
+
+            foreach (Bullet b in active_grid.getBullets())
             {
-               
+
                 switch (b.Direction)
                 {
                     case 0:
@@ -472,7 +475,6 @@ namespace Tanker
                     case 3:
                         // West
                         spriteBatch.Draw(bullet, new Vector2(b.PixelLocation.X + 35, b.PixelLocation.Y + 35), null, Color.White, MathHelper.ToRadians(270), new Vector2(35, 35), 1, SpriteEffects.None, 1);
-                        Console.WriteLine("PIXEL LOCATION x="+ b.PixelLocation.X + 35+" Y" + b.PixelLocation.Y + 35);
                         break;
                 }
             }

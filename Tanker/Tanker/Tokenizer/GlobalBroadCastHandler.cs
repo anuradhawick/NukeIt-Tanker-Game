@@ -28,7 +28,7 @@ namespace NukeIt_Tanker.Tokenizer
             // if a legitimate message to be handled
             else if (message[1] == ':')
             {
-               
+
                 message = message.Substring(0, message.Length - 1);
                 message_components = message.Split(':');
                 for (int i = 1; i < message_components.Length; i++)
@@ -46,14 +46,15 @@ namespace NukeIt_Tanker.Tokenizer
                         int coins = Int32.Parse(sub_components[5]);
                         int points = Int32.Parse(sub_components[6]);
                         //Update the main grid
-                        Console.WriteLine("Player " + player_name);
-                        Console.WriteLine("Health " + health);
-                        Console.WriteLine("Coins " + coins);
-                        Console.WriteLine("Points " + points);
-                        Console.WriteLine("Shot " + whether_shot);
-                        Console.WriteLine("Location " + location[0] + "," + location[1]);
-                        Console.WriteLine("Direction " + direction);
-                        active_grid.updateTank(player_name, new Microsoft.Xna.Framework.Vector2(location[0], location[1]), Int32.Parse(whether_shot) == 1 ? true : false, Int32.Parse(direction), points, health,coins);
+                        //Console.WriteLine("Player " + player_name);
+                        //Console.WriteLine("Health " + health);
+                        //Console.WriteLine("Coins " + coins);
+                        //Console.WriteLine("Points " + points);
+                        //Console.WriteLine("Shot " + whether_shot);
+                        //Console.WriteLine("Location " + location[0] + "," + location[1]);
+                        //Console.WriteLine("Direction " + direction);
+                        if (active_grid.Tanks.ContainsKey(player_name))
+                            active_grid.updateTank(player_name, new Microsoft.Xna.Framework.Vector2(location[0], location[1]), Int32.Parse(whether_shot) == 1 ? true : false, Int32.Parse(direction), points, health, coins);
                     }
                     else
                     {
@@ -69,7 +70,8 @@ namespace NukeIt_Tanker.Tokenizer
                             //Console.WriteLine("Brick:");
                             //Console.WriteLine("Location " + x + "," + y);
                             //Console.WriteLine("Damage " + damage_level);
-                            active_grid.updateBrick(new Microsoft.Xna.Framework.Vector2(x, y), damage_level);
+                            if (active_grid.BrickWalls.ContainsKey(new Microsoft.Xna.Framework.Vector2(x, y)))
+                                active_grid.updateBrick(new Microsoft.Xna.Framework.Vector2(x, y), damage_level);
                         }
                     }
                 }
