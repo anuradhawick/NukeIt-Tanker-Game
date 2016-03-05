@@ -2,9 +2,6 @@
 using NukeIt_Tanker.CommManager;
 using NukeIt_Tanker.GameEntity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Tanker.AI
 {
@@ -36,6 +33,8 @@ namespace Tanker.AI
             }
             return true;
         }
+
+        // Perform the next move based on the provided next cell
         public static void nextMove(MessageSender ms, MainGrid mg, Vector2 location)
         {
             Vector2 player = mg.Tanks[mg.Playername].Location;
@@ -43,33 +42,25 @@ namespace Tanker.AI
             if (player.X < location.X)
             {
                 ms.right();
-                //Vector2 tmp = new Vector2(mg.Tanks[mg.Playername].Location.X + 1, mg.Tanks[mg.Playername].Location.Y);
-                //mg.updateTank(mg.Playername, tmp, false, 0, 0, 50, 50);
             }
             // to move left
             else if (player.X > location.X)
             {
                 ms.left();
-                //Vector2 tmp = new Vector2(mg.Tanks[mg.Playername].Location.X - 1, mg.Tanks[mg.Playername].Location.Y);
-                //mg.updateTank(mg.Playername, tmp, false, 0, 0, 50, 50);
             }
             // to move up
             else if (player.Y > location.Y)
             {
                 ms.up();
-                //Vector2 tmp = new Vector2(mg.Tanks[mg.Playername].Location.X, mg.Tanks[mg.Playername].Location.Y - 1);
-                //mg.updateTank(mg.Playername, tmp, false, 0, 0, 50, 50);
             }
             // to move down
             else if (player.Y < location.Y)
             {
                 ms.down();
-                //Vector2 tmp = new Vector2(mg.Tanks[mg.Playername].Location.X, mg.Tanks[mg.Playername].Location.Y + 1);
-                //mg.updateTank(mg.Playername, tmp, false, 0, 0, 50, 50);
             }
         }
 
-
+        // Check if the cell is occupied
         public static bool isCellOccupied(Graph g, Vector2 nextCell)
         {
             if (g.getNodes()[(int)nextCell.X, (int)nextCell.Y].Type == Components.Tank)
@@ -79,7 +70,7 @@ namespace Tanker.AI
             return false;
         }
 
-        // ent1 and ent2 should be on same row or col
+        // Check if an entity lies between given two entities
         public static bool isInBetween(AbstractEntity ent1, AbstractEntity ent2, AbstractEntity midPoint)
         {
             // in same column
@@ -88,7 +79,7 @@ namespace Tanker.AI
                 //ent1 above ent2
                 if (ent1.Location.Y < ent2.Location.Y)
                 {
-                    if(ent1.Location.Y<midPoint.Location.Y && midPoint.Location.Y < ent2.Location.Y)
+                    if (ent1.Location.Y < midPoint.Location.Y && midPoint.Location.Y < ent2.Location.Y)
                     {
                         return true;
                     }

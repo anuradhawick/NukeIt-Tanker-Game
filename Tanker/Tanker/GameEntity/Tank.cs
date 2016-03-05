@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NukeIt_Tanker.GameEntity
+﻿namespace NukeIt_Tanker.GameEntity
 {
     class Tank : AbstractEntity
     {
+        // Attributes of a tank
         private string player_name;
         private bool whether_shot;
         private int points;
@@ -15,6 +10,7 @@ namespace NukeIt_Tanker.GameEntity
         private int health;
         private int coins;
 
+        // Getters and setters
         public int Health
         {
             get { return health; }

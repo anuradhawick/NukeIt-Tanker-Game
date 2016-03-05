@@ -1,12 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using NukeIt_Tanker.GameEntity;
-using System;
-using System.Collections.Generic;
+﻿using NukeIt_Tanker.GameEntity;
 using System.Linq;
-using System.Text;
 
 namespace Tanker.AI.CalculationTools
 {
+    /*
+    This class is used to hold live statistics that are required by 
+    the AI to make decisions whether to follow which logic (Coin, Shoot etc)
+    */
     class BaseLogic
     {
         private static string player;

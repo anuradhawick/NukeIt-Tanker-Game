@@ -6,6 +6,7 @@ using System.Linq;
 using System.Timers;
 namespace Tanker.GameEntity
 {
+    // Time keeper for expiring timeoutable entities
     class TimeKeeper : AbstractEntity
     {
         private MainGrid mg;
@@ -13,6 +14,7 @@ namespace Tanker.GameEntity
         private static Dictionary<Vector2, Coin> coins;
         private static Dictionary<Vector2, LifePack> life_packs;
 
+        // Ticks every 500ms and update the maingrid
         public TimeKeeper(MainGrid mg)
         {
             this.mg = mg;
@@ -40,7 +42,7 @@ namespace Tanker.GameEntity
                     coins.Remove(cc.Location);
                 }
             }
-
+            // removal of life packs
             foreach (LifePack cc in life_packs.Values.ToList<LifePack>())
             {
                 if (CurrentTimeMillis() > cc.Life_time + cc.Born_time)

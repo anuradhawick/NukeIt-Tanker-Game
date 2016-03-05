@@ -25,7 +25,6 @@ namespace Tanker.AI.CalculationTools
             foreach (Coin item in mg.Coins.Values.ToList<Coin>())
             {
                 tempDist = g.getPathByEntity(item).Count;
-                //tempDist = Math.Abs((int)playerLocation.X - (int)item.Location.X) + Math.Abs((int)playerLocation.Y - (int)item.Location.Y);
                 if (tempDist < dist)
                 {
                     dist = tempDist;
@@ -45,7 +44,6 @@ namespace Tanker.AI.CalculationTools
             foreach (BrickWall item in mg.BrickWalls.Values.ToList<BrickWall>())
             {
                 tempDist = g.getPathByEntity(item).Count;
-                //tempDist = Math.Abs((int)playerLocation.X - (int)item.Location.X) + Math.Abs((int)playerLocation.Y - (int)item.Location.Y);
                 if (tempDist < dist)
                 {
                     dist = tempDist;

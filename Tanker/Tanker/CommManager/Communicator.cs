@@ -3,12 +3,9 @@ using NukeIt_Tanker.Tokenizer;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.CommManager
 {
@@ -72,12 +69,7 @@ namespace NukeIt_Tanker.CommManager
                 //Establish connection upon client request
                 while (true)
                 {
-                    //connection is connected socket
-                    //if (!listener.Pending())
-                    //{
-                    //    Thread.Sleep(500);
-                    //    continue;
-                    //}
+                    
                     connection = listener.AcceptSocket();
                     
                     if (connection.Connected)
@@ -110,7 +102,7 @@ namespace NukeIt_Tanker.CommManager
                         {
                             port = 7000;
                         }
-                        Console.WriteLine("Received: " + reply.Substring(0, reply.Length - 1));
+                        //Console.WriteLine("Received: " + reply.Substring(0, reply.Length - 1));
                         p1.handleMessage(reply.Substring(0, reply.Length - 1));
 
                     }
@@ -118,8 +110,6 @@ namespace NukeIt_Tanker.CommManager
             }
             catch (Exception e)
             {
-                //System.IO.File.WriteAllText(@"C:\Writeline.txt",e.StackTrace);
-                //Console.WriteLine("Communication (RECEIVING) Failed! \n " + e.StackTrace);
                 errorOcurred = true;
                 return;
             }
@@ -155,7 +145,7 @@ namespace NukeIt_Tanker.CommManager
                         Byte[] tempStr = Encoding.ASCII.GetBytes(str);
 
                         //writing to the port         
-                        Console.WriteLine("Sent: " + str);
+                        //Console.WriteLine("Sent: " + str);
                         this.writer.Write(tempStr);
                         this.writer.Close();
                         this.clientStream.Close();
@@ -168,7 +158,7 @@ namespace NukeIt_Tanker.CommManager
             }
             finally
             {
-                this.client.Close();
+                client.Close();
             }
         }
     }

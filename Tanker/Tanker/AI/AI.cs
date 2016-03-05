@@ -14,13 +14,13 @@ namespace Tanker.AI
         private MainGrid mg;
         private MessageSender ms;
         private Graph g;
-        //private List
         public GameAI(MainGrid mg, MessageSender ms)
         {
             this.mg = mg;
             this.ms = ms;
         }
 
+        // Basic AI logic
         public void move()
         {
             calculateGraph();
@@ -80,10 +80,14 @@ namespace Tanker.AI
 
         }
 
+
+        // Brick beaking logic
         private bool breakBrick()
         {
+            // Check if bricks exist
             if (mg.BrickWalls.ContainsKey(CoinLogic.getBestBrickWall(mg, g)))
             {
+                // Shoot if path is blocked by an enemy
                 if (ShootingLogic.shootable(mg, mg.BrickWalls[CoinLogic.getBestBrickWall(mg, g)]))
                 {
                     ms.shoot();
@@ -102,19 +106,27 @@ namespace Tanker.AI
 
         }
 
+        // Update the statistics that are required by AI
         private void calculateGraph()
         {
+            // Generate the graph
             g = new Graph(mg, mg.Playername);
+            // Run Dijkstra to get shortest path for every node
             Dijkstra.run(g);
+            // Update statistics
             BaseLogic.updateStats(mg);
         }
 
+
+        // Search for health packs and save life
         private bool findHealth()
         {
+            // Check if there are life packs
             if (mg.Life_packs.Count > 0)
             {
                 if (MotionLogic.isCellOccupied(g, g.getNextNode(mg.Life_packs[HealthLogic.getBestLifePack(mg, g)])))
                 {
+                    // Shoot if cell is occupied
                     if (ShootingLogic.isDirectShootable(mg))
                     {
                         ms.shoot();
@@ -125,6 +137,7 @@ namespace Tanker.AI
                         return false;
                     }
                 }
+                // Move if the path is free
                 else if (mg.Tanks[mg.Playername].Location != g.getNextNode(mg.Life_packs[HealthLogic.getBestLifePack(mg, g)]))
                 {
                     MotionLogic.nextMove(ms, mg, g.getNextNode(mg.Life_packs[HealthLogic.getBestLifePack(mg, g)]));
@@ -141,32 +154,36 @@ namespace Tanker.AI
             }
         }
 
+        // Shooting logic
         private bool shoot()
         {
             if (mg.Tanks.Count > 1)
             {
+                // if shootable without any turning
                 if (ShootingLogic.isDirectShootable(mg))
                 {
                     ms.shoot();
-                    //Console.WriteLine("Contains this many tanks"+mg.Tanks.Count);
                     return true;
                 }
+                // Move if not
                 else
                 {
                     MotionLogic.nextMove(ms, mg, g.getNextNode(ShootingLogic.getNearestEnemy(mg, g)));
-                    //Console.WriteLine("AIMED TO KILL " + EnemyLogic.getNearestEnemy(mg, g).Player_name + "========= TO" + g.getNextNode(EnemyLogic.getNearestEnemy(mg, g)).X + "," + g.getNextNode(EnemyLogic.getNearestEnemy(mg, g)).Y + "FROM " + mg.Tanks[mg.Playername].Location.X + "," + mg.Tanks[mg.Playername].Location.X);
                     return true;
                 }
             }
             return false;
         }
 
+        // Coin chasing logic
         private bool chaseCoin()
         {
+            // only works if coins are available
             if (mg.Coins.Count > 0)
             {
                 if (MotionLogic.isCellOccupied(g, g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)])))
                 {
+                    // If the next cell is occupied by someone try shooting
                     if (ShootingLogic.isDirectShootable(mg))
                     {
                         ms.shoot();
@@ -177,6 +194,7 @@ namespace Tanker.AI
                         return false;
                     }
                 }
+                // If there exit a direct path for the coin
                 else if (mg.Tanks[mg.Playername].Location != g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)]))
                 {
                     MotionLogic.nextMove(ms, mg, g.getNextNode(mg.Coins[CoinLogic.getBestCoin(mg, g)]));
@@ -191,8 +209,10 @@ namespace Tanker.AI
             return false;
         }
 
+        // Escape if vulnerable for an attack
         private bool escape()
         {
+            // Check is we need to escape or it's fine
             if (ShootingLogic.shouldEscape(mg, g))
             {
                 MotionLogic.nextMove(ms, mg, g.getNextNode(g.getNodes()[(int)ShootingLogic.getNearestSafePlace(mg, g).X, (int)ShootingLogic.getNearestSafePlace(mg, g).Y]));

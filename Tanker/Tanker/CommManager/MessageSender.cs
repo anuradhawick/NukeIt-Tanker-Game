@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NukeIt_Tanker.CommManager
+﻿namespace NukeIt_Tanker.CommManager
 {
+    /*
+    Implementation of the basic 5 messages that are handled by the server
+    */
     class MessageSender
     {
         MessageHandler mh;
-        bool canSend = true;
         public MessageSender(MessageHandler i)
         {
             mh = i;

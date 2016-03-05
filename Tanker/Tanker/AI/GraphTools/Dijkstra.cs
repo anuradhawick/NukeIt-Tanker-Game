@@ -1,18 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using NukeIt_Tanker.GameEntity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Tanker.AI.GraphTools;
 
 namespace Tanker.AI
 {
-
-
-
-
-
+    /*
+    General implementation of Dijkstra on a graph with nodes
+    */
     class Dijkstra
     {
         private Dijkstra()
@@ -28,14 +22,7 @@ namespace Tanker.AI
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    //if (nodes[i, j].Type != Components.Stone && nodes[i, j].Type != Components.Water && nodes[i, j].Type != Components.Brick)
-                    //{
-                        vertextSet.Add(nodes[i, j]);
-                    //}
-                    //if (nodes[i, j].Type == Components.Empty || nodes[i, j].Type==Components.Tank)
-                    //{
-                    //    vertextSet.Add(nodes[i, j]);
-                    //}
+                    vertextSet.Add(nodes[i, j]);
                 }
             }
             head.setDist(0);

@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using NukeIt_Tanker.GameEntity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Tanker.AI.GraphTools;
 
 namespace Tanker.AI
@@ -29,7 +27,7 @@ namespace Tanker.AI
                     nodes[i, j].setY(j);
                 }
             }
-
+            // Setting up Component types for each node
             foreach (StoneWall itm in mg.StoneWalls.Values.ToList<StoneWall>())
             {
                 nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Stone;
@@ -49,7 +47,7 @@ namespace Tanker.AI
                 if (itm.Player_name == mg.Playername) continue;
                 nodes[(int)itm.Location.X, (int)itm.Location.Y].Type = Components.Tank;
             }
-
+            // Setting up neighbour nodes for each node
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -82,28 +80,9 @@ namespace Tanker.AI
                             nodes[i, j].addNeighbour(nodes[i, j - 1]);
                         }
                     }
-                    //// up
-                    //if (MotionLogic.isValidCell(i - 1, j) && (nodes[i - 1, j].Type == Components.Empty || nodes[i - 1, j].Type == Components.Tank))
-                    //{
-                    //    nodes[i, j].addNeighbour(nodes[i - 1, j]);
-                    //}
-                    //// down
-                    //if (MotionLogic.isValidCell(i + 1, j) && (nodes[i + 1, j].Type == Components.Empty || nodes[i + 1, j].Type == Components.Tank))
-                    //{
-                    //    nodes[i, j].addNeighbour(nodes[i + 1, j]);
-                    //}
-                    //// right
-                    //if (MotionLogic.isValidCell(i, j + 1) && (nodes[i, j + 1].Type == Components.Empty|| nodes[i, j + 1].Type == Components.Tank))
-                    //{
-                    //    nodes[i, j].addNeighbour(nodes[i, j + 1]);
-                    //}
-                    //// left
-                    //if (MotionLogic.isValidCell(i, j - 1) && (nodes[i, j - 1].Type == Components.Empty|| nodes[i, j - 1].Type == Components.Tank))
-                    //{
-                    //    nodes[i, j].addNeighbour(nodes[i, j - 1]);
-                    //}
                 }
             }
+            // Set distance to our player as zero which is the head
             foreach (Tank itm in mg.Tanks.Values.ToList<Tank>())
             {
                 if (itm.Player_name == player)
@@ -125,18 +104,21 @@ namespace Tanker.AI
 
         }
 
-        public Stack<Node> getPathByNode(Node head)
+
+        // Get path for a node
+        public Stack<Node> getPathByNode(Node node)
         {
             Stack<Node> stack = new Stack<Node>();
-            stack.Push(head);
-            while (head.getParent() != null)
+            stack.Push(node);
+            while (node.getParent() != null)
             {
-                head = head.getParent();
-                stack.Push(head);
+                node = node.getParent();
+                stack.Push(node);
             }
             return stack;
         }
 
+        // Get path for an entity
         public Stack<Node> getPathByEntity(AbstractEntity ent)
         {
             int X = (int)ent.Location.X;
@@ -145,6 +127,7 @@ namespace Tanker.AI
 
         }
 
+        // Get next node for an entity
         public Vector2 getNextNode(AbstractEntity ent)
         {
             Stack<Node> path = getPathByEntity(ent);
@@ -156,7 +139,7 @@ namespace Tanker.AI
             Node n = path.Pop();
             return new Vector2(n.getX(), n.getY());
         }
-
+        // Overload of the above method
         public Vector2 getNextNode(Node head)
         {
             Stack<Node> path = getPathByNode(head);

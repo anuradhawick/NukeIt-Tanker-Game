@@ -542,7 +542,6 @@ namespace Tanker
                     if (counter == 0)
                     {
                         ++counter;
-                        Console.WriteLine("Enter pressed");
                         msgSender.join();
                         lastPress = CurrentTimeMillis();
 

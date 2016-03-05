@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.CommManager
 {
+    // The class that handles incomming messages from the communicator and update the main grid
     class MessageHandler
     {
         Communicator c;
+        // Receive in a seperate thread
         public MessageHandler(MainGrid active_grid)
         {
             c = Communicator.GetInstance(active_grid);
@@ -18,16 +20,10 @@ namespace NukeIt_Tanker.CommManager
             Thread t = new Thread(ts,50000000);
             t.Start();
         }
-
+        // Send in the same thread
         public void send(string msg)
         {
-            //Thread thread = new Thread(() => c.SendData(msg));
-            //thread.Start();
             c.SendData(msg);
-        }
-        private void perform_return()
-        {
-
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Tanker.AI
+﻿namespace Tanker.AI
 {
+    /*
+    Enum to keep the component types of each node of the graph
+    */
     enum Components
     {
         Empty,

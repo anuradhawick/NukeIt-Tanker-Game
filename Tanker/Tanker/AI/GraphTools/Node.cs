@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Tanker.AI.GraphTools
 {
+    /*
+    Building unit of the game graph
+    */
     class Node
     {
         private Node parent;

@@ -23,7 +23,6 @@ namespace Tanker.AI.CalculationTools
             foreach (LifePack item in mg.Life_packs.Values.ToList<LifePack>())
             {
                 tempDist = g.getPathByEntity(item).Count;
-                //tempDist = Math.Abs((int)playerLocation.X - (int)item.Location.X) + Math.Abs((int)playerLocation.Y - (int)item.Location.Y);
                 if (tempDist < dist)
                 {
                     dist = tempDist;
