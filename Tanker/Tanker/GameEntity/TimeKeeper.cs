@@ -7,7 +7,7 @@ using System.Timers;
 namespace Tanker.GameEntity
 {
     // Time keeper for expiring timeoutable entities
-    class TimeKeeper : AbstractEntity
+    public class TimeKeeper : AbstractEntity
     {
         private MainGrid mg;
         private Timer timer;

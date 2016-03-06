@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Tanker.AI.CalculationTools
 {
-    class CoinLogic
+    public class CoinLogic
     {
         private CoinLogic()
         {

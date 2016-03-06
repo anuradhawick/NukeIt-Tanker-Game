@@ -9,7 +9,7 @@ using Tanker.AI.CalculationTools;
 
 namespace Tanker.AI
 {
-    class GameAI
+    public class GameAI
     {
         private MainGrid mg;
         private MessageSender ms;

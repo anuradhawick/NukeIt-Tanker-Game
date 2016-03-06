@@ -9,7 +9,7 @@ using System.Text;
 
 namespace NukeIt_Tanker.CommManager
 {
-    class Communicator
+    public class Communicator
     {
         #region "Variables"
         private NetworkStream clientStream; //Stream - outgoing

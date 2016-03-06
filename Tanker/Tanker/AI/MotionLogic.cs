@@ -5,7 +5,7 @@ using System;
 
 namespace Tanker.AI
 {
-    class MotionLogic
+    public class MotionLogic
     {
         private MotionLogic()
         {

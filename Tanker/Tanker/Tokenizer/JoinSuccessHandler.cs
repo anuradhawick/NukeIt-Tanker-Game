@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.Tokenizer
 {
-    class JoinSuccessHandler : MessageParser
+    public class JoinSuccessHandler : MessageParser
     {
         int[] location;
         string[] messageComponents;

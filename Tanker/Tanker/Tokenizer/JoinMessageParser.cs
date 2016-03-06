@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.Tokenizer
 {
-    class JoinMessageParser : MessageParser
+    public class JoinMessageParser : MessageParser
     {
         public JoinMessageParser(MainGrid active_grid)
             : base(active_grid)

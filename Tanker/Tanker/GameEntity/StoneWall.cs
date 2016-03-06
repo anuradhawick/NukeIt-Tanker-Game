@@ -1,6 +1,6 @@
 ﻿namespace NukeIt_Tanker.GameEntity
 {
-    class StoneWall : Wall
+    public class StoneWall : Wall
     {
     }
 }

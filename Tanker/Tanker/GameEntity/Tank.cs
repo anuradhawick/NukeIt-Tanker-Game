@@ -1,6 +1,6 @@
 ﻿namespace NukeIt_Tanker.GameEntity
 {
-    class Tank : AbstractEntity
+    public class Tank : AbstractEntity
     {
         // Attributes of a tank
         private string player_name;

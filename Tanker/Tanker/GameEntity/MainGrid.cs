@@ -5,7 +5,7 @@ using Tanker.GameEntity;
 
 namespace NukeIt_Tanker.GameEntity
 {
-    class MainGrid
+    public class MainGrid
     {
         private bool gameStarted = false;
         // The grid contains a hash-table containing the tanks with player name as the key

@@ -2,7 +2,7 @@
 
 namespace NukeIt_Tanker.GameEntity
 {
-    class Coin : AbstractEntity, TimeOutable
+    public class Coin : AbstractEntity, TimeOutable
     {
         // Coins have a specific life time and a value
         private int life_time;

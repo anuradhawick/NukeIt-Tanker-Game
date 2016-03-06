@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 // This package implments Chain of Responsibilities(COR) design pattern
 namespace NukeIt_Tanker.Tokenizer
 {
-    abstract class MessageParser
+    public abstract class MessageParser
     {
         public abstract bool handleMessageImpl(string message);
         private MessageParser nextHandler;

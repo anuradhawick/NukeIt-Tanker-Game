@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.Tokenizer
 {
-    class GlobalBroadCastHandler : MessageParser
+    public class GlobalBroadCastHandler : MessageParser
     {
         string[] message_components;
         string[] sub_components;

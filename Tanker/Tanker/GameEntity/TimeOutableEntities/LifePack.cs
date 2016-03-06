@@ -2,7 +2,7 @@
 
 namespace NukeIt_Tanker.GameEntity
 {
-    class LifePack : AbstractEntity, TimeOutable
+    public class LifePack : AbstractEntity, TimeOutable
     {
         private int life_time;
         private long born_time;

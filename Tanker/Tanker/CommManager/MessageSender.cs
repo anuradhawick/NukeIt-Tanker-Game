@@ -3,7 +3,7 @@
     /*
     Implementation of the basic 5 messages that are handled by the server
     */
-    class MessageSender
+    public class MessageSender
     {
         MessageHandler mh;
         public MessageSender(MessageHandler i)

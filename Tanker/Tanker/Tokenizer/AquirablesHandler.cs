@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.Tokenizer
 {
-    class AquirablesHandler : MessageParser
+    public class AquirablesHandler : MessageParser
     {
         public AquirablesHandler(MainGrid active_grid)
             : base(active_grid)

@@ -7,7 +7,7 @@ namespace Tanker.AI.CalculationTools
     This class is used to hold live statistics that are required by 
     the AI to make decisions whether to follow which logic (Coin, Shoot etc)
     */
-    class BaseLogic
+    public class BaseLogic
     {
         private static string player;
         private static int health;

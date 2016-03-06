@@ -8,7 +8,7 @@ namespace Tanker.AI.GraphTools
     /*
     Building unit of the game graph
     */
-    class Node
+    public class Node
     {
         private Node parent;
         private Components type;
@@ -47,7 +47,7 @@ namespace Tanker.AI.GraphTools
         {
             x = i;
         }
-        internal Components Type
+        public Components Type
         {
             get { return type; }
             set { type = value; }

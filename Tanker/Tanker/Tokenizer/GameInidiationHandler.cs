@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.Tokenizer
 {
-    class GameInidiationHandler : MessageParser
+    public class GameInidiationHandler : MessageParser
     {
         private string player_name;
         private List<int[]> bricks;

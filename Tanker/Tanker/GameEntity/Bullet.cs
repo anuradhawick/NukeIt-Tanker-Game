@@ -3,7 +3,7 @@ using NukeIt_Tanker.GameEntity;
 
 namespace Tanker.GameEntity
 {
-    class Bullet : AbstractEntity
+    public class Bullet : AbstractEntity
     {
         private int direction; // Follows tank convention
         private Vector2 pixelLocation;

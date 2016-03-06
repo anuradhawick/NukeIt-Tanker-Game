@@ -3,7 +3,7 @@
     /*
     Enum to keep the component types of each node of the graph
     */
-    enum Components
+    public enum Components
     {
         Empty,
         Water,

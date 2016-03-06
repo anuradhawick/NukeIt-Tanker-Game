@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.Tokenizer
 {
-    class MovingAndShootingHandler : MessageParser
+    public class MovingAndShootingHandler : MessageParser
     {
         public MovingAndShootingHandler(MainGrid active_grid)
             : base(active_grid)

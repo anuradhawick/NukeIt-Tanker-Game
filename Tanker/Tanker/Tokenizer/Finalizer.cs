@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.Tokenizer
 {
-    class Finalizer : MessageParser
+    public class Finalizer : MessageParser
     {
         public Finalizer(MainGrid active_grid)
             : base(active_grid)

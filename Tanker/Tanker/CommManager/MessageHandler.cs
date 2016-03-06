@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace NukeIt_Tanker.CommManager
 {
     // The class that handles incomming messages from the communicator and update the main grid
-    class MessageHandler
+    public class MessageHandler
     {
         Communicator c;
         // Receive in a seperate thread

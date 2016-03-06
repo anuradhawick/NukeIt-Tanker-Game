@@ -7,7 +7,7 @@ namespace Tanker.AI
     /*
     General implementation of Dijkstra on a graph with nodes
     */
-    class Dijkstra
+    public class Dijkstra
     {
         private Dijkstra()
         {

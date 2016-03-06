@@ -4,7 +4,7 @@ using System;
 namespace NukeIt_Tanker.GameEntity
 {
     // Acts as the parent class for all building game entities that lies in the Game Grid
-    abstract class AbstractEntity
+    public abstract class AbstractEntity
     {
         // Location of the game object
         private Vector2 location;

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Tanker.AI.CalculationTools
 {
-    class HealthLogic
+    public class HealthLogic
     {
 
         private HealthLogic() { }

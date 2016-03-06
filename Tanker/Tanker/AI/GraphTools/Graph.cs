@@ -6,7 +6,7 @@ using Tanker.AI.GraphTools;
 
 namespace Tanker.AI
 {
-    class Graph
+    public class Graph
     {
         Node[,] nodes;
         Node head;

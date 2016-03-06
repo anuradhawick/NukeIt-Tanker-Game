@@ -1,6 +1,6 @@
 ﻿namespace NukeIt_Tanker.GameEntity
 {
-    class BrickWall : Wall
+    public class BrickWall : Wall
     {
 
         private int damage;

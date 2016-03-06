@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NukeIt_Tanker.GameEntity
 {
-    class Wall : AbstractEntity
+    public class Wall : AbstractEntity
     {
     }
 }

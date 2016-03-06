@@ -1,6 +1,6 @@
 ﻿namespace NukeIt_Tanker.GameEntity
 {
-    class Waters : AbstractEntity
+    public class Waters : AbstractEntity
     {
     }
 }

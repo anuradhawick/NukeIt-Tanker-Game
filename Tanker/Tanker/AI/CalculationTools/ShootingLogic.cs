@@ -7,7 +7,7 @@ using Tanker.AI.GraphTools;
 
 namespace Tanker.AI.CalculationTools
 {
-    class ShootingLogic
+    public class ShootingLogic
     {
 
         public static Tank getNearestEnemy(MainGrid mg, Graph g)
