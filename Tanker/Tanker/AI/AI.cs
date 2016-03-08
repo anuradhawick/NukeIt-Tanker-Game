@@ -23,6 +23,10 @@ namespace Tanker.AI
         // Basic AI logic
         public void move()
         {
+            if (mg.Death)
+            {
+                return;
+            }
             calculateGraph();
             if (BaseLogic.IsHealthLow)
             {
@@ -35,7 +39,7 @@ namespace Tanker.AI
                     // Escape if at risk
                     if (!escape())
                     {
-                        // Cannot excape, then shoot
+                        // Cannot escape, then shoot
                         shoot();
                     }
                     else
@@ -54,11 +58,29 @@ namespace Tanker.AI
             }
             else if (mg.Tanks.Count > 1)
             {
-                //if (ShootingLogic.isDirectShootable(mg))
-                //{
-                //    shoot();
-                //}
-                //else
+                if (ShootingLogic.isDirectShootable(mg))
+                {
+                    // Shoot if the distance to tank is closer than coin
+                    Vector2 loc = CoinLogic.getBestCoin(mg, g);
+                    if (mg.Coins.ContainsKey(loc))
+                    {
+                        // If coin is nearer than enemy chase the coin
+                        if (g.getPathByEntity(mg.Coins[loc]).Count < g.getPathByEntity(ShootingLogic.getNearestEnemy(mg, g)).Count)
+                        {
+                            chaseCoin();
+                        }
+                        // If not keep shooting
+                        else
+                        {
+                            shoot();
+                        }
+                    }
+                    else
+                    {
+                        shoot();
+                    }
+                }
+                else
                 if (!chaseCoin())
                 {
                     if (!breakBrick())
@@ -91,6 +113,10 @@ namespace Tanker.AI
                 if (ShootingLogic.shootable(mg, mg.BrickWalls[CoinLogic.getBestBrickWall(mg, g)]))
                 {
                     ms.shoot();
+                    //ms.shoot();
+                    //ms.shoot();
+                    //ms.shoot();
+                    //ms.shoot();
                     return true;
                 }
                 else
@@ -130,6 +156,10 @@ namespace Tanker.AI
                     if (ShootingLogic.isDirectShootable(mg))
                     {
                         ms.shoot();
+                        //ms.shoot();
+                        //ms.shoot();
+                        //ms.shoot();
+                        //ms.shoot();
                         return true;
                     }
                     else
@@ -163,6 +193,10 @@ namespace Tanker.AI
                 if (ShootingLogic.isDirectShootable(mg))
                 {
                     ms.shoot();
+                    //ms.shoot();
+                    //ms.shoot();
+                    //ms.shoot();
+                    //ms.shoot();
                     return true;
                 }
                 // Move if not
@@ -187,6 +221,10 @@ namespace Tanker.AI
                     if (ShootingLogic.isDirectShootable(mg))
                     {
                         ms.shoot();
+                        //ms.shoot();
+                        //ms.shoot();
+                        //ms.shoot();
+                        //ms.shoot();
                         return true;
                     }
                     else

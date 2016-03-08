@@ -46,10 +46,10 @@ namespace NukeIt_Tanker.Tokenizer
                     BrickWall br = new BrickWall();
                     br.Location = new Microsoft.Xna.Framework.Vector2(cordinate[0], cordinate[1]);
                     br.Damage = 0;
-                    this.active_grid.Playername = player_name;
+                    active_grid.Playername = player_name;
                     lock (active_grid.BrickWalls)
                     {
-                        this.active_grid.addBrickWall(br);
+                        active_grid.addBrickWall(br);
                     }
                 }
                 // Decoding stone locations

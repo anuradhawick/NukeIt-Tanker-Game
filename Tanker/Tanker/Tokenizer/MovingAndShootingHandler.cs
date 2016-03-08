@@ -25,6 +25,7 @@ namespace NukeIt_Tanker.Tokenizer
                     Console.WriteLine("Cell occupied parsed");
                     return true;
                 case "DEAD#":
+                    active_grid.Death = true;
                     Console.WriteLine("death parsed");
                     return true;
                 case "TOO_QUICK#":

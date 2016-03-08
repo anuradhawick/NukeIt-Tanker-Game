@@ -8,6 +8,7 @@ namespace NukeIt_Tanker.GameEntity
     public class MainGrid
     {
         private bool gameStarted = false;
+        private bool death = false;
         // The grid contains a hash-table containing the tanks with player name as the key
         private Dictionary<string, Tank> tanks;
 
@@ -212,6 +213,19 @@ namespace NukeIt_Tanker.GameEntity
             set
             {
                 gameStarted = value;
+            }
+        }
+
+        public bool Death
+        {
+            get
+            {
+                return death;
+            }
+
+            set
+            {
+                death = value;
             }
         }
     }

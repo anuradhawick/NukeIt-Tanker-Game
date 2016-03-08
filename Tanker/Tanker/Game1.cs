@@ -212,7 +212,7 @@ namespace Tanker
             drawCoins();
             drawLifePacks();
             updateTank();
-            //drawBullet();
+            drawBullet();
             spriteBatch.End();
             // MathHelper.ToRadians(90)
             base.Draw(gameTime);
@@ -253,78 +253,94 @@ namespace Tanker
             // update new tanks
             tanks = active_grid.Tanks;
             Stack<Tank> removable = new Stack<Tank>();
-            foreach (Tank tk in tanks.Values.ToList<Tank>())
+            try
             {
-                if (tk.Health == 0 && tk.Player_name == active_grid.Playername)
+                foreach (Tank tk in tanks.Values.ToList<Tank>())
                 {
-                    Rectangle reclarge = new Rectangle(0, 0, 700, 700);
-                    spriteBatch.Draw(gameover, reclarge, Color.White);
-                    continue;
+                    if (tk.Health == 0 && tk.Player_name == active_grid.Playername)
+                    {
+                        Rectangle reclarge = new Rectangle(0, 0, 700, 700);
+                        spriteBatch.Draw(gameover, reclarge, Color.White);
+                        continue;
 
-                }
-                else if (tk.Health == 0)
-                {
-                    //dropping their coins
-                    //Coin c = new Coin();
-                    //c.Location = tk.Location;
-                    //c.Value = tk.Coins;
-                    //c.Life_time = 999999999;
-                    //coins.Add(tk.Location, c);
-                    removable.Push(tk);
-                    continue;
-                }
-                switch (tk.Direction)
-                {
-                    case 0://north
-                        spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, 0, new Vector2(35, 35), 1, SpriteEffects.None, 1);
-                        spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
+                    }
+                    else if (tk.Health == 0)
+                    {
+                        //dropping their coins
+                        Coin c = new Coin();
+                        c.Location = tk.Location;
+                        c.Value = tk.Coins;
+                        c.Life_time = 999999999;
+                        if (coins.ContainsKey(c.Location))
+                        {
+                            coins[c.Location].Value += c.Value;
+                        }
+                        else
+                        {
+                            coins.Add(tk.Location, c);
+                        }
+                        removable.Push(tk);
+                        continue;
+                    }
+                    switch (tk.Direction)
+                    {
+                        case 0://north
+                            spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, 0, new Vector2(35, 35), 1, SpriteEffects.None, 1);
+                            spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
 
-                        break;
-                    case 1://east
-                        spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(90), new Vector2(35, 35), 1, SpriteEffects.None, 1);
-                        spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
-                        break;
-                    case 2://south
-                        spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(180), new Vector2(35, 35), 1, SpriteEffects.None, 1);
-                        spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
-                        break;
-                    case 3://west
-                        spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(270), new Vector2(35, 35), 1, SpriteEffects.None, 1);
-                        spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
-                        break;
-                }
-                if (tk.Player_name == active_grid.Playername)
-                {
-                    spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.DarkBlue);
-                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.DarkBlue);
-                    spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.DarkBlue);
-                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                            break;
+                        case 1://east
+                            spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(90), new Vector2(35, 35), 1, SpriteEffects.None, 1);
+                            spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
+                            break;
+                        case 2://south
+                            spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(180), new Vector2(35, 35), 1, SpriteEffects.None, 1);
+                            spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
+                            break;
+                        case 3://west
+                            spriteBatch.Draw(playerLogo[tk.Player_name], new Vector2(tk.Location.X * 70 + 35, tk.Location.Y * 70 + 35), null, Color.White, MathHelper.ToRadians(270), new Vector2(35, 35), 1, SpriteEffects.None, 1);
+                            spriteBatch.DrawString(font, tk.Player_name, new Vector2(tk.Location.X * 70 + 25, tk.Location.Y * 70 + 20), Color.White);
+                            break;
+                    }
+                    if (tk.Player_name == active_grid.Playername)
+                    {
+                        spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.DarkBlue);
+                        spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                        spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.DarkBlue);
+                        spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.DarkBlue);
 
-                }
-                else
-                {
-                    spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.Black);
-                    spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.Black);
-                    spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.Black);
-                    spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.Black);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(font, tk.Player_name, playerstat[tk.Player_name], Color.Black);
+                        spriteBatch.DrawString(font, tk.Points + "", new Vector2(playerstat[tk.Player_name].X + 60, playerstat[tk.Player_name].Y), Color.Black);
+                        spriteBatch.DrawString(font, tk.Coins + "", new Vector2(playerstat[tk.Player_name].X + 130, playerstat[tk.Player_name].Y), Color.Black);
+                        spriteBatch.DrawString(font, tk.Health + "%", new Vector2(playerstat[tk.Player_name].X + 200, playerstat[tk.Player_name].Y), Color.Black);
 
-                }
+                    }
 
-                // Remove coins if a tank collects them
-                if (coins.ContainsKey(tk.Location))
-                {
-                    coins.Remove(tk.Location);
+                    // Remove coins if a tank collects them
+                    if (coins.ContainsKey(tk.Location))
+                    {
+                        coins.Remove(tk.Location);
+                    }
+                    // Remove lifepack if a tank collects them
+                    if (life_packs.ContainsKey(tk.Location))
+                    {
+                        life_packs.Remove(tk.Location);
+                    }
+                    // If the tank has shot
+                    if (tk.Whether_shot)
+                    {
+                        active_grid.addBullet(new Bullet(tk.Direction, new Vector2(tk.Location.X * 70, tk.Location.Y * 70)));
+                        tk.Whether_shot = false;
+                    }
                 }
-                // Remove lifepack if a tank collects them
-                if (life_packs.ContainsKey(tk.Location))
-                {
-                    life_packs.Remove(tk.Location);
-                }
-                // If the tank has shot
-                if (tk.Whether_shot)
-                {
-                    active_grid.addBullet(new Bullet(tk.Direction, new Vector2(tk.Location.X * 70, tk.Location.Y * 70)));
-                }
+            }
+            catch (Exception)
+            {
+
+                //
             }
             while (removable.Count > 0)
             {
@@ -375,11 +391,19 @@ namespace Tanker
         private void drawCoins()
         {
             coins = active_grid.Coins;
-            foreach (Coin cc in coins.Values.ToList<Coin>())
+            try
             {
-                Rectangle rc = new Rectangle((int)cc.Location.X * 70, (int)cc.Location.Y * 70, 70, 70);
-                spriteBatch.Draw(coin, rc, Color.White);
-                spriteBatch.DrawString(font, cc.Value + "$", new Vector2((int)cc.Location.X * 70 + 10, (int)cc.Location.Y * 70 + 25), Color.White);
+                foreach (Coin cc in coins.Values.ToList<Coin>())
+                {
+                    Rectangle rc = new Rectangle((int)cc.Location.X * 70, (int)cc.Location.Y * 70, 70, 70);
+                    spriteBatch.Draw(coin, rc, Color.White);
+                    spriteBatch.DrawString(font, cc.Value + "$", new Vector2((int)cc.Location.X * 70 + 10, (int)cc.Location.Y * 70 + 25), Color.White);
+                }
+            }
+            catch (Exception)
+            {
+
+                //
             }
         }
 
@@ -387,17 +411,23 @@ namespace Tanker
         private void drawLifePacks()
         {
             life_packs = active_grid.Life_packs;
-            foreach (LifePack lp in life_packs.Values.ToList<LifePack>())
+            try
             {
-                Rectangle rc = new Rectangle((int)lp.Location.X * 70, (int)lp.Location.Y * 70, 70, 70);
-                spriteBatch.Draw(lifepack, rc, Color.White);
+                foreach (LifePack lp in life_packs.Values.ToList<LifePack>())
+                {
+                    Rectangle rc = new Rectangle((int)lp.Location.X * 70, (int)lp.Location.Y * 70, 70, 70);
+                    spriteBatch.Draw(lifepack, rc, Color.White);
+                }
+            }
+            catch (Exception)
+            {
+
+                //
             }
         }
-
         // Drawing bullets
         public void drawBullet()
         {
-            //spriteBatch.Draw(bullet, new Vector2(210 + 35, 0 + 35), null, Color.White, MathHelper.ToRadians(90), new Vector2(35, 35), 1, SpriteEffects.None, 1);
             // updates that happen in 1/60 th of a second are performed
             foreach (Bullet b in active_grid.getBullets().ToArray<Bullet>())
             {
@@ -405,29 +435,24 @@ namespace Tanker
                 {
                     case 0:
                         // North
-                        b.PixelLocation = new Vector2(b.PixelLocation.X, b.PixelLocation.Y - 3.5f);
-                        // Console.WriteLine("SHOOTING DIrection North X=" + (b.PixelLocation.X) + " Y=" + (b.PixelLocation.Y - 3.5f));
+                        b.PixelLocation = new Vector2(b.PixelLocation.X, b.PixelLocation.Y - 7);
                         break;
                     case 1:
                         // East
-                        b.PixelLocation = new Vector2(b.PixelLocation.X + 3.5f, b.PixelLocation.Y);
-                        //Console.WriteLine("SHOOTING DIrection EAST X=" + (b.PixelLocation.X + 3.5f) + " Y=" + b.PixelLocation.Y);
+                        b.PixelLocation = new Vector2(b.PixelLocation.X + 7, b.PixelLocation.Y);
                         break;
                     case 2:
                         // South
-                        b.PixelLocation = new Vector2(b.PixelLocation.X, b.PixelLocation.Y + 3.5f);
-                        //Console.WriteLine("SHOOTING DIrection SOUTH X=" + (b.PixelLocation.X) + " Y=" + (b.PixelLocation.Y + 35));
+                        b.PixelLocation = new Vector2(b.PixelLocation.X, b.PixelLocation.Y + 7);
                         break;
                     case 3:
                         // West
-                        b.PixelLocation = new Vector2(b.PixelLocation.X - 3.5f, b.PixelLocation.Y);
-                        //Console.WriteLine("SHOOTING DIrection WEST X=" + (b.PixelLocation.X - 3.5f) + " Y=" + b.PixelLocation.Y);
+                        b.PixelLocation = new Vector2(b.PixelLocation.X - 7, b.PixelLocation.Y);
                         break;
                 }
                 // If there is a tank, stone, brick or index out remove the bullet
                 if (b.PixelLocation.X > 70 * 9 || b.PixelLocation.Y > 70 * 9 || b.PixelLocation.X < 0 || b.PixelLocation.Y < 0)
                 {
-                    Console.WriteLine("Remove bullet..............");
                     active_grid.removeBullet(b);
                     continue;
                 }
@@ -445,12 +470,10 @@ namespace Tanker
                     if (active_grid.StoneWalls.ContainsKey(new Vector2(b.PixelLocation.X / 70, b.PixelLocation.Y / 70)))
                     {
                         active_grid.removeBullet(b);
-                        continue;
                     }
-                    else if (active_grid.BrickWalls.ContainsKey(new Vector2(b.PixelLocation.X / 70, b.PixelLocation.Y / 70)))
+                    if (active_grid.BrickWalls.ContainsKey(new Vector2(b.PixelLocation.X / 70, b.PixelLocation.Y / 70)))
                     {
                         active_grid.removeBullet(b);
-                        continue;
                     }
                 }
             }

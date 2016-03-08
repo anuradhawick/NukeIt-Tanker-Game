@@ -31,6 +31,8 @@ namespace NukeIt_Tanker.CommManager
         static MessageParser p7;
 
         private string ipAddress = "127.0.0.1";
+        //private string ipAddress = "192.168.1.100";
+        //private string ipAddress = "192.168.1.73";
         #endregion
 
         private Communicator()

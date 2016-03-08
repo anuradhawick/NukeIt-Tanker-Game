@@ -39,7 +39,8 @@ namespace NukeIt_Tanker.Tokenizer
                     coin.Life_time = timeout;
                     coin.Location = new Microsoft.Xna.Framework.Vector2(location[0], location[1]);
                     coin.Value = value;
-                    active_grid.addCoin(coin);
+                    lock (active_grid.Coins)
+                    { active_grid.addCoin(coin); }
                     return true;
                 }
                 // if the message is related to life packs
@@ -56,7 +57,8 @@ namespace NukeIt_Tanker.Tokenizer
                     LifePack lp = new LifePack();
                     lp.Life_time = timeout;
                     lp.Location = new Microsoft.Xna.Framework.Vector2(location[0], location[1]);
-                    active_grid.addLifePack(lp);
+                    lock (active_grid.Life_packs)
+                    { active_grid.addLifePack(lp); }
                     return true;
                 }
             }
